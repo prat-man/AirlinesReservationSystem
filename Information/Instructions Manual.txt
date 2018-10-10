@@ -1,0 +1,113 @@
+WARNING
+*******
+
+DO NOT EVER EVER COMMIT TO THE MASTER BRANCH
+
+
+
+URLS
+----
+
+ProjecyRepository
+https://github.com/prat-man/AirlinesReservationSystem
+
+Instructions Manual
+https://github.com/prat-man/AirlinesReservationSystem/blob/master/Instructions%20Manual.txt
+
+Trello Board Link
+https://trello.com/invite/b/ckRsIb8O/fa1999dae19cfbba10cad08a6ffc02b2/airlinereservationsystem
+
+
+
+
+Project Requirements
+--------------------
+
+Wildfly 13
+Eclipse Photon
+
+
+Notepad++
+https://notepad-plus-plus.org/download/v7.5.8.html
+
+
+Git
+https://git-scm.com/downloads
+
+
+
+
+
+Project Setup
+-------------
+
+This is the project set-up process
+You have to do this only once on your laptop/PC
+
+
+Create the path in D:/Eclipse Workspace/AirlinesReservationSystem
+
+Open the folder D:/Eclipse Workspace/AirlinesReservationSystem
+
+Open Git Bash inside D:/Eclipse Workspace/AirlinesReservationSystem
+
+
+
+GIT Setup
+---------
+
+This is the project set-up process
+You have to do this only once on your laptop/PC
+
+Run the following commands
+Replace anything inside [] along with the brackets with the appropriate value
+
+
+git init
+
+git config --global user.email "[YOUR EMAIL ID HERE : pratanu.mandal@gmail.com]"
+
+git config --global user.name "[YOUR FULL NAME HERE : Pratanu Mandal]"
+
+git remote add ars https://github.com/prat-man/AirlinesReservationSystem
+
+git remote -v
+
+git pull ars master
+
+git branch [YOUR FIRST NAME (ALL lower case) HERE : pratanu]
+
+git checkout [YOUR FIRST NAME (ALL lower case) HERE : pratanu]
+
+
+
+
+GIT access instructions
+-----------------------
+
+Run the following commands
+Replace anything inside [] along with the brackets with the appropriate value
+
+You have to do this everytime you access git repo
+
+
+git checkout [YOUR FIRST NAME (ALL lower case) HERE : pratanu]
+
+git pull ars master
+
+// Make whatever changes you want to your program (this is a comment)
+// I will elaborate on this later
+
+// If you are adding files
+git add .
+
+// If you are removing files
+git rm "[FILE NAME WITH RELATIVE PATH HERE]"
+
+git commit
+OR
+git commit -m "[MESSAGE]"
+
+git push --set-upstream ars [YOUR FIRST NAME (ALL lower case) HERE : pratanu]
+OR
+git push ars
