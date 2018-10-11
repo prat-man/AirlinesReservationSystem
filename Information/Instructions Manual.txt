@@ -14,7 +14,7 @@ https://github.com/prat-man/AirlinesReservationSystem
 Instructions Manual
 https://github.com/prat-man/AirlinesReservationSystem/blob/master/Instructions%20Manual.txt
 
-Spring Data Mongo  DB
+Spring Data Mongo DB
 https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongodb.repositories.queries
 
 
