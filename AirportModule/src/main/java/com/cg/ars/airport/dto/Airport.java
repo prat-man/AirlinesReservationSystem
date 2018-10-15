@@ -10,15 +10,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Airport
 {
 	@Id
-	@NotNull
+	@NotNull(message="Airport abbreviation is required")
     @Pattern(regexp = "[A-Z]{3,4}",message="Abbreviation should be of the format:[XYZ123]")
 	private String abbreviation;
 	
-	@NotNull
+	@NotNull(message="Airport name is required")
 	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Airport Name cannot be blank and should start with UPPERCASE letter")
 	private String airportName;
 	
-	@NotNull(message="Location cannot be empty")
+	@NotNull(message="Location is required")
 	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Location cannot be empty and should start with UPPERCASE letter")
 	private String location;
 

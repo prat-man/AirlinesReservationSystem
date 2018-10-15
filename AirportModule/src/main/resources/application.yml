@@ -5,3 +5,7 @@ spring:
       host: localhost
       port: 27017
       database: db_157971
+      
+server:
+address: 10.220.56.33
+port: 8080
