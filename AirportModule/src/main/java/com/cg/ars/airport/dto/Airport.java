@@ -1,5 +1,8 @@
 package com.cg.ars.airport.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,10 +10,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Airport
 {
 	@Id
+	@NotNull
+    @Pattern(regexp = "[A-Z]{3,4}",message="Abbreviation should be of the format:[XYZ123] and cannot be empty!")
 	private String abbreviation;
 	
+	@NotNull
+	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Airport Name cannot be blank and should start with UPPERCASE letter")
 	private String airportName;
 	
+	@NotNull(message="Location cannot be empty")
+	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Location cannot be empty and should start with UPPERCASE letter")
 	private String location;
 
 	public Airport() {

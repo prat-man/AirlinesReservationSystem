@@ -1,6 +1,7 @@
 package com.cg.ars.airport.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,10 +17,11 @@ public class RestExceptionHandler
 		return new ApiError(exc.getMessage(), exc.getUri());
 	}
 	
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public @ResponseBody ApiError handleException(Exception exc)
+	public @ResponseBody ApiError handleException(MethodArgumentNotValidException exc)
 	{
+	
 		return new ApiError(exc.getMessage(), null);
 	}
 }
