@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.ars.airport.dto.Airport;
 import com.cg.ars.airport.exception.AirportException;
 import com.cg.ars.airport.service.AirportService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.DuplicateKeyException;
 
 @RestController
 @RequestMapping("/airport")
