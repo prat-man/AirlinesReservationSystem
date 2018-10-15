@@ -3,6 +3,10 @@ package com.cg.ars.flight.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,32 +15,56 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Flight
 {
 	@Id
+	@NotNull(message="FlightNo cannot be Empty")
+	@Pattern(regexp = "[A-Z]{3,4}[0-9]{4,6}",message="FlightNo should be of the format:[XYZ1234]")
 	private String flightNo;
 	
+	@NotNull(message="Airline cannot be Empty")
+	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Airline should be of the format:[Xyz Pqr]")
 	private String airline;
 	
+	@NotNull(message="Departure City cannot be Empty")
+	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Departure City should be of the format:[Xyz Pqr]")
 	private String depCity;
 	
+	@NotNull(message="Arrival City cannot be Empty")
+	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Arrival City should be of the format:[Xyz Pqr]")
 	private String arrCity;
 	
+	@NotNull(message="Departure Date cannot be Empty")
 	private LocalDate depDate;
 	
+	@NotNull(message="Arrival City cannot be Empty")
 	private LocalDate arrDate;
 	
+	@NotNull(message="Departure Time cannot be Empty")
 	private LocalTime depTime;
 	
+	@NotNull(message="Arrival Time cannot be Empty")
 	private LocalTime arrTime;
 	
+	@NotNull(message="Seats cannot be Empty")
+	@Min(value=1)
 	private Integer firstSeats;
 	
+	@NotNull(message="Seats fare cannot be Empty")
+	@Min(value=1000)
 	private Double firstSeatsFare;
 	
+	@NotNull(message="Seats cannot be Empty")
+	@Min(value=1)
 	private Integer bussSeats;
 	
+	@NotNull(message="Seats fare cannot be Empty")
+	@Min(value=1000)
 	private Double bussSeatsFare;
 	
+	@NotNull(message="Departure Airport cannot be Empty")
+	@Pattern(regexp = "[A-Z]{3,4}",message="Departure Airport should be of the format:[WXYZ]")
 	private String depAirport;
 	
+	@NotNull(message="Arrival Airport cannot be Empty")
+	@Pattern(regexp = "[A-Z]{3,4}",message="Departure Airport should be of the format:[WXYZ]")
 	private String arrAirport;
 	
 	@Transient
