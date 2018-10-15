@@ -11,7 +11,7 @@ public class Airport
 {
 	@Id
 	@NotNull
-    @Pattern(regexp = "[A-Z]{3,4}",message="Abbreviation should be of the format:[XYZ123] and cannot be empty!")
+    @Pattern(regexp = "[A-Z]{3,4}",message="Abbreviation should be of the format:[XYZ123]")
 	private String abbreviation;
 	
 	@NotNull
