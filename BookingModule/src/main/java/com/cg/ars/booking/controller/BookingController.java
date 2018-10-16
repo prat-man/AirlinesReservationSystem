@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,7 @@ public class BookingController
 	
 	@PostMapping(value="/add",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	public Booking insertBooking(@Valid @RequestBody Booking booking){
-		
-		return B_SER.save(booking);
+		return B_SER.insert(booking);
 	}
 	
 	@GetMapping(value="/search/{id}",produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
@@ -37,4 +37,9 @@ public class BookingController
 		}
     	return booking;
     }
+	
+	@PutMapping(value="/update",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	public Booking updateBooking(@Valid @RequestBody Booking booking){
+		return B_SER.save(booking);
+	}
 }
