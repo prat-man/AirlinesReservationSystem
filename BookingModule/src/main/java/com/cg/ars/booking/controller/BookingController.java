@@ -24,11 +24,10 @@ public class BookingController
 	@PostMapping(value="/add",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	public Booking insertBooking(@Valid @RequestBody Booking booking){
 		return B_SER.save(booking);
-		
 	}
 	
 	@GetMapping(value="/search/{id}",produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-    public Booking searchBookingById(@PathVariable("id")String bookingId) throws BookingException
+    public Booking searchBookingById(@PathVariable("id") String bookingId) throws BookingException
     {
 		Booking booking = B_SER.findByBookingId(bookingId);
 		if(booking == null)
