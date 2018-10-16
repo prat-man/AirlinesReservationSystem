@@ -37,7 +37,7 @@ public class ARSController
 		}
 	}
 	
-	@RequestMapping("/registerAction")
+	@RequestMapping("/register")
 	public String register(HttpServletRequest request) {
 	    return "/register.jsp";
 	}
