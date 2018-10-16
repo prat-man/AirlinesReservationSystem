@@ -5,7 +5,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,15 +24,16 @@ import com.cg.ars.user.service.UserService;
 public class UserController
 {
 	@Autowired
-	private UserService user;
+	private UserService service;
+	
 	@PostMapping(path="/add",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public User addUser(@RequestBody @Valid User users) throws UserException
 	{
-		if(user.findByUsername(users.getUsername())!=null)
+		if(service.findByUsername(users.getUsername())!=null)
 		{
 			throw new UserException("User with " + users.getUsername() + " already exists", "/user/add");
 		}
-		User newUser = user.insert(users);
+		User newUser = service.insert(users);
 		if(newUser == null)
 		{
 			throw new UserException("User " + users.getUsername() + " cannot be added", "/user/add");
@@ -40,26 +43,20 @@ public class UserController
 			return newUser;
 		}
 	}
-	@RequestMapping(value = "/verify", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean verify(@RequestBody Map<String, String> userAuth) throws UserException
+	
+	@PostMapping(value="/verify")
+	public User verify(@RequestBody User user) throws UserException
 	{
-		User verifyUser = new User();
-		verifyUser = user.findByUsername(userAuth.get("username"));
-		if(verifyUser != null)
-		{
-			if(verifyUser.getPassword().equals((userAuth.get("password"))))
-			{
-				return true;
-			}
-			else
-			{
-				throw new UserException("Username: " + userAuth.get("username") + " has entered a wrong password", "/user/verify");
-			}
+		String username = user.getUsername();
+		String password = user.getPassword();
+		
+		User retUser = service.findByUsername(username);
+		
+		if (retUser != null && retUser.getPassword().equals(password)) {
+			return retUser;
 		}
-		else
-		{
-			throw new UserException("Username: " + userAuth.get("username") + " is invalid username", "/user/verify");
+		else {
+			throw new UserException("Invalid Credentials", "/user/verify");
 		}
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
+import com.cg.ars.client.dto.User;
 
 @Controller
 @RequestMapping("/ars")
@@ -26,11 +27,13 @@ public class ARSController
 		
 		Object object = restTemplate.postForObject(url, request, Object.class);
 		
-		if (object instanceof Boolean) {
-			return "success";
+		if (object instanceof User) {
+			// TODO: Show appropriate console based on role
+			User user = (User) object;
+			return "/success.jsp";
 		}
 		else {
-			return "failure";
+			return "/failure.jsp";
 		}
 	}
 	
