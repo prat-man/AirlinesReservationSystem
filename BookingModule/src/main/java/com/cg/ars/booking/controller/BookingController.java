@@ -23,6 +23,7 @@ public class BookingController
 	
 	@PostMapping(value="/add",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	public Booking insertBooking(@Valid @RequestBody Booking booking){
+		
 		return B_SER.save(booking);
 	}
 	
