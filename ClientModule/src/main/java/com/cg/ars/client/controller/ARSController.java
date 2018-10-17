@@ -1,21 +1,26 @@
 package com.cg.ars.client.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.cg.ars.client.dto.Airport;
+import com.cg.ars.client.dto.Flight;
 import com.cg.ars.client.dto.User;
 
 @Controller
 @RequestMapping("/ars")
 public class ARSController
 {
-	@RequestMapping(value={"", "/login"})
+	@RequestMapping(value={"", "/index"})
 	public String login(HttpServletRequest request) {
-	    return "/login.jsp";
+	    return "/index.jsp";
 	}
 	
 	@RequestMapping("/loginAction")
@@ -57,5 +62,25 @@ public class ARSController
 		else {
 			return "failure";
 		}
+	}
+	
+	@PostMapping(path="/searchFlight")
+	public String searchFlight(HttpServletRequest request, Model model) throws JSONException
+	{
+		RestTemplate restTemplate = new RestTemplate();
+		
+		String url="http://localhost:8081/flight/search";
+		
+		String fromCity = request.getParameter("fromCity");
+		String toCity = request.getParameter("toCity");
+		String depDate = request.getParameter("depDate");
+		
+	    @SuppressWarnings("unchecked")
+		List<Flight> flightList = (List<Flight>) restTemplate.getForObject(url + "/" + fromCity + "/" + toCity + "/" + depDate, List.class);
+	    
+		System.out.println(flightList);
+		model.addAttribute("flightList", flightList);
+		return "/success.jsp";
+		
 	}
 }
