@@ -5,18 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
-import com.cg.ars.client.dto.Airport;
 import com.cg.ars.client.dto.Flight;
 import com.cg.ars.client.dto.User;
 
@@ -70,25 +64,22 @@ public class ARSController
 		}
 	}
 	
-	@PostMapping(path="/searchflight",consumes=MediaType.ALL_VALUE)
+	@PostMapping(path="/searchFlight")
 	public String searchFlight(HttpServletRequest request, Model model) throws JSONException
 	{
 		RestTemplate restTemplate = new RestTemplate();
 		
-		String url="http://localhost:8081/emp/insert";
+		String url="http://localhost:8081/flight/search";
 		
-		HttpHeaders headers=new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		String fromCity = request.getParameter("fromCity");
+		String toCity = request.getParameter("toCity");
+		String depDate = request.getParameter("depDate");
 		
-		JSONObject query = new JSONObject();
-		query.put("fromCity",request.getParameter("fromcity"));
-		query.put("toCity", request.getParameter("tocity"));
-		query.put("depDate", request.getParameter("depdate"));
-		
-	    HttpEntity<String> search = new HttpEntity<String>(query.toString(),headers);
-	    ResponseEntity<List<Flight>> flight = restTemplate.postForObject(url, search, ResponseEntity.class);
-		System.out.println(flight);
-		model.addAttribute("flightList", flight);
+	    @SuppressWarnings("unchecked")
+		List<Flight> flightList = (List<Flight>) restTemplate.getForObject(url + "/" + fromCity + "/" + toCity + "/" + depDate, List.class);
+	    
+		System.out.println(flightList);
+		model.addAttribute("flightList", flightList);
 		return "/success.jsp";
 		
 	}
