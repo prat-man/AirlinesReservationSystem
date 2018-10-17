@@ -25,11 +25,11 @@ public class FlightController
     @PostMapping(path="/add")
     public Flight addFlight(@RequestBody Flight flight) throws FlightException
     {
-        if(fser.findByflightNo(flight.getFlightNo()) != null) {
+        if(service.findByflightNo(flight.getFlightNo()) != null) {
             throw new FlightException("Flight with Flight No. :"+ flight.getFlightNo() + " already exists","/flight/add");
         }
         
-        Flight newFlight = fser.insert(flight);
+        Flight newFlight = service.insert(flight);
         
         if(newFlight == null) {
             throw new FlightException("Flight:" + flight.getFlightNo() + "Could not be added","/flight/add");
@@ -42,12 +42,12 @@ public class FlightController
     @GetMapping(path="/view")
     public List<Flight> viewAllFlights()
     {
-        return fser.findAll();
+        return service.findAll();
     }
     
     @GetMapping(path="/search/{depCity}/{arrCity}/{depDate}")
     public List<Flight> searchFlight(@PathVariable("depCity") String depCity, @PathVariable("arrCity") String arrCity, @PathVariable("depDate") String depDate)
     {
-        return fser.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
+        return service.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
     }
 }
