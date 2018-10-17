@@ -20,7 +20,7 @@ import com.cg.ars.flight.service.FlightService;
 public class FlightController
 {
 	@Autowired
-    private FlightService fser;
+    private FlightService service;
     
     @PostMapping(path="/add")
     public Flight addFlight(@RequestBody Flight flight) throws FlightException
@@ -33,7 +33,8 @@ public class FlightController
         
         if(newFlight == null) {
             throw new FlightException("Flight:" + flight.getFlightNo() + "Could not be added","/flight/add");
-        }else {
+        }
+        else {
             return newFlight;
         }
     }
@@ -41,12 +42,12 @@ public class FlightController
     @GetMapping(path="/view")
     public List<Flight> viewAllFlights()
     {
-        return fser.findAll();  
+        return fser.findAll();
     }
     
     @GetMapping(path="/search/{depCity}/{arrCity}/{depDate}")
     public List<Flight> searchFlight(@PathVariable("depCity") String depCity, @PathVariable("arrCity") String arrCity, @PathVariable("depDate") String depDate)
     {
-    	return fser.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
+        return fser.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
     }
 }
