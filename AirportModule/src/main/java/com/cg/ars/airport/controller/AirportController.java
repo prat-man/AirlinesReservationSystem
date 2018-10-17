@@ -25,7 +25,7 @@ public class AirportController
 	@Autowired
 	private AirportService aser;
 	
-	@PostMapping(path="/addAirport",consumes=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path="/add")
 	public Airport addAirport(@RequestBody @Valid Airport airport) throws AirportException {
 		if(aser.findByAbbreviation(airport.getAbbreviation()) != null) {
 			throw new AirportException("Airport with abbreviation:"+ airport.getAbbreviation() + " already exists","/airport/addAirport");
@@ -33,20 +33,19 @@ public class AirportController
 		Airport newAirport = aser.insert(airport);
 		if(newAirport == null) {
 			throw new AirportException("Airport :" + airport.getAbbreviation() + "Could not be added","/airport/addAirport");
-		}else {
+		}
+		else {
 			return newAirport;
 		}
 	}
-			
 	
-	
-	@DeleteMapping(path="/deleteAirport/{airportAbbreviation}",produces=MediaType.APPLICATION_JSON_VALUE)
-	public String deleteAirport(@PathVariable("airportAbbreviation") @Valid String airportAbbreviation) throws AirportException {
-		String deleteAirport = aser.deleteByAbbreviation(airportAbbreviation);
+	@DeleteMapping(path="/delete/{abreviation}")
+	public String deleteAirport(@PathVariable("abbreviation") @Valid String abbreviation) throws AirportException {
+		String deleteAirport = aser.deleteByAbbreviation(abbreviation);
 		if(deleteAirport.equals("0")){
-			throw new AirportException("Could not delete airport: " + airportAbbreviation + "." + "The Airport may not exist in the DB","airport/deleteAirport/" + airportAbbreviation);
+			throw new AirportException("Could not delete airport: " + abbreviation + "." + "The Airport may not exist in the DB","airport/deleteAirport/" + abbreviation);
 		}else {
-			return "Deleted Airport with abbreviation:" + airportAbbreviation;
+			return "Deleted Airport with abbreviation:" + abbreviation;
 		}	
 	}
 	
