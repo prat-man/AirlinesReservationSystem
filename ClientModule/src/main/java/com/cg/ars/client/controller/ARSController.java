@@ -226,8 +226,8 @@ public class ARSController
 	}
 	
 	@RequestMapping("/confirmBooking")
-	public String confirmBooking(HttpServletRequest request, Model model) {
-		
+	public String confirmBooking(HttpServletRequest request, Model model)
+	{
 		String url = getBookingUrl() + "/booking/add";
 		System.out.println(url);
 		Booking newBooking = new Booking();
@@ -238,26 +238,23 @@ public class ARSController
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		
-        Integer noOfPassengers = Integer.parseInt(request.getParameter("noOfPassengers"));
-		
 		newBooking.setBookingId(request.getParameter("bookingId"));
 		newBooking.setClassType(request.getParameter("classType"));
-		newBooking.setCreditCardInfo(request.getParameter("creditCardInfo"));
-		newBooking.setDestCity(request.getParameter("destCity"));
-		newBooking.setFlightNo(request.getParameter("flightNo"));
-		newBooking.setNoOfPassengers(noOfPassengers);
-		newBooking.setSrcCity(request.getParameter("srcCity"));
-		newBooking.setTotalFare(Double.parseDouble(request.getParameter("totalFare")));
 		newBooking.setName(request.getParameter("name"));
-		
+		newBooking.setFlightNo(request.getParameter("flightNo"));
+		newBooking.setNoOfPassengers(Integer.parseInt(request.getParameter("noOfPassengers")));
+		newBooking.setSrcCity(request.getParameter("srcCity"));
+		newBooking.setDestCity(request.getParameter("destCity"));
+		newBooking.setCreditCardInfo(request.getParameter("creditCardInfo"));
+		newBooking.setTotalFare(Double.parseDouble(request.getParameter("totalFare")));
 		
 		HttpEntity<Booking> entity = new HttpEntity<>(newBooking,headers);
 		
 		ResponseEntity<Booking> confirmedBooking = restTemplate.postForEntity(url, entity, Booking.class);
-		System.out.println(confirmedBooking);
-		model.addAttribute("confirmedBooking",confirmedBooking);
 		
-		return "/bookingSuccess";
+		model.addAttribute("confirmedBooking", confirmedBooking.getBody());
+		
+		return "/bookingSuccess.jsp";
 	}
 
 	/*
