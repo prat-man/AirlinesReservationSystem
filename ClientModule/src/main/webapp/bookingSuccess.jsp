@@ -12,8 +12,8 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<h2>Booking Successful</h2>
 	<div class="container">
+		<h2>Booking Successful</h2>
 		<table>
 			<tr>
 				<td>Booking Id</td>
