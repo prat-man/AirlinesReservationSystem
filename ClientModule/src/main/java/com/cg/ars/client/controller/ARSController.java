@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
+import com.cg.ars.client.dto.Booking;
 import com.cg.ars.client.dto.Flight;
 
 import com.netflix.appinfo.InstanceInfo;
@@ -112,7 +113,7 @@ public class ARSController
 		}
 	}*/
 	
-	@PostMapping(path="/searchFlight")
+	@GetMapping("/searchFlight")
 	public String searchFlight(HttpServletRequest request, Model model)
 	{
 		String url = getFlightUrl() + "/flight/search";
@@ -124,8 +125,6 @@ public class ARSController
 	    @SuppressWarnings("unchecked")
 		List<Flight> flightList = (List<Flight>) restTemplate.getForObject(url + "/" + fromCity + "/" + toCity + "/" + depDate, List.class);
 	    
-		System.out.println(flightList);
-		
 		model.addAttribute("flightList", flightList);
     
 		model.addAttribute("fromCity", fromCity);
@@ -182,43 +181,81 @@ public class ARSController
 	@RequestMapping("/newBooking/{flightNo}")
 	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
 		
-		RestTemplate restTemplate = new RestTemplate();
 		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
 		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flightNo;
-		
 		Flight flight = restTemplate.getForObject(url1,Flight.class);
-		String bookingId = restTemplate.getForObject(url2, String.class);
-		
-		String classType = request.getParameter("class");
-		
+		String bookingId = restTemplate.getForObject(url2, String.class);		
+		String classFare = request.getParameter("class");
+		String arr[]=classFare.split("@");
+		Double fare = Double.parseDouble(arr[1]);
+		System.out.println(fare);
 		model.addAttribute("bookingId", bookingId);
-		model.addAttribute("classType", classType);
+		model.addAttribute("fare", fare);
+		model.addAttribute("classType", arr[0]);
 		model.addAttribute("flight", flight);
-		return "/newBooking.jsp";
+		return "/newbooking.jsp";
 	}
 	
 	@PostMapping("/payment")
 	public String payment(HttpServletRequest request, Model model)
 	{
+	
 		String name = request.getParameter("name");
-		String noOfPassengers = request.getParameter("noOfPassengers");
+		Integer noOfPassengers = Integer.parseInt(request.getParameter("noOfPassengers"));
 		String bookingId = request.getParameter("bookingId");
 		String flightNo = request.getParameter("flightNo");
+		Double fare = Double.parseDouble(request.getParameter("fare"));
 		String classType = request.getParameter("classType");
 		String depCity = request.getParameter("depCity");
 		String arrCity = request.getParameter("arrCity");
 		
+		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
+		System.out.println(url1);
+		Flight flight = restTemplate.getForObject(url1,Flight.class);
+		Double totalFare = noOfPassengers*fare;
 		model.addAttribute("name", name);
+		model.addAttribute("classType",classType);
 		model.addAttribute("noOfPassengers", noOfPassengers);
 		model.addAttribute("bookingId", bookingId);
-		model.addAttribute("flightNo", flightNo);
-		model.addAttribute("classType", classType);
-		model.addAttribute("depCity", depCity);
-		model.addAttribute("arrCity", arrCity);
+		model.addAttribute("totalfare", totalFare);
+		model.addAttribute("flight",flight);
 		
 		return "/payment.jsp";
 	}
 	
+	@RequestMapping("/confirmBooking")
+	public String confirmBooking(HttpServletRequest request, Model model) {
+		
+		String url = getBookingUrl() + "/booking/add";
+		System.out.println(url);
+		Booking newBooking = new Booking();
+		
+		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		
+		
+		newBooking.setBookingId(request.getParameter("bookingId"));
+		newBooking.setClassType(request.getParameter("classType"));
+		newBooking.setCreditCardInfo(request.getParameter("creditCardInfo"));
+		newBooking.setDestCity(request.getParameter("destCity"));
+		newBooking.setFlightNo(request.getParameter("flightNo"));
+		newBooking.setNoOfPassengers(Integer.parseInt(request.getParameter("noOfPassengers")));
+		newBooking.setSrcCity(request.getParameter("srcCity"));
+		newBooking.setTotalFare(Double.parseDouble(request.getParameter("totalFare")));
+		newBooking.setName(request.getParameter("name"));
+		
+		
+		HttpEntity<Booking> entity = new HttpEntity<>(newBooking,headers);
+		
+		ResponseEntity<Booking> confirmedBooking = restTemplate.postForEntity(url, entity, Booking.class);
+		model.addAttribute("confirmedBooking",confirmedBooking);
+		
+		return "/bookingSuccess";
+	}
+
 	/*
 	 * Utility Methods to get Microservice URLs
 	 */

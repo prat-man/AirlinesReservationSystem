@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,9 @@
 <title>Flight Search Result</title>
 </head>
 <body>
-<jsp:include page='header.jsp'></jsp:include>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-
+<jsp:include page='header.jsp'/>
 <div class="container">
-<h3>Showing search Results for all flights from ${depCity} To ${toCity} on {$depDate}</h3>
+<h3>Showing search Results for all flights from ${fromCity} To ${toCity} on ${depDate}</h3>
 <c:forEach items="${flightList}" var="result">
     <div class="resultTable">
     	<table>
@@ -32,17 +31,18 @@
     			<td>${result.depTime}</td>
     			<td>${result.arrTime}</td>
     			<td>
-    			<form action="/ars/newBooking/${result.flightNo}/" Method="get" name="bookform">
-    				<input type="radio" name="class" value="first"> FirstClass: ${result.firstSeatsFare}<br>
-  					<input type="radio" name="class" value="Business"> BusinessClass: ${result.bussSeatsFare}
+    			<form action="/ars/newBooking/${result.flightNo}" Method="get" id="bookform">
+    				<input type="radio" name="class" value="First@${result.firstSeatsFare}" checked> FirstClass: ${result.firstSeatsFare}<br>
+  					<input type="radio" name="class" value="Business@${result.firstSeatsFare}"> BusinessClass: ${result.bussSeatsFare}
   				</form>
   				</td>
-  				<td><button type="button" class="btn btn-danger" form="bookForm" onclick="formSubmit()">Book</button></td>
+  				<td><button type="submit" class="btn btn-danger" form="bookform" >Book</button></td>
     		</tr>
     	</table>
     </div>
 </c:forEach>
 </div>
-<jsp:include page='footer.jsp'></jsp:include>
+<jsp:include page='footer.jsp'/>
 </body>
 </html>
+

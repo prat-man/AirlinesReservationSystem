@@ -56,7 +56,7 @@ public class FlightController
 		return service.findByDepCityLike(depCity);	
     }
     
-    @RequestMapping(path="/searchbyFlightNo/{flightNo}")
+    @RequestMapping(path="/searchByFlightNo/{flightNo}")
     public Flight searchByFlightNo(@PathVariable String flightNo) {
     	return service.findByflightNo(flightNo);
     }
