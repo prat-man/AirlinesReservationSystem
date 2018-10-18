@@ -182,8 +182,10 @@ public class ARSController
 	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
 		
 		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
-		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flightNo;
+
 		Flight flight = restTemplate.getForObject(url1,Flight.class);
+		
+		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flight.getAirline();
 		String bookingId = restTemplate.getForObject(url2, String.class);		
 		String classFare = request.getParameter("class");
 		String arr[]=classFare.split("@");
