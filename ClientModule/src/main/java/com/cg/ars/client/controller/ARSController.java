@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +15,17 @@ import org.springframework.web.client.RestTemplate;
 import com.cg.ars.client.dto.Airport;
 import com.cg.ars.client.dto.Flight;
 import com.cg.ars.client.dto.User;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
 
 @Controller
 @RequestMapping("/ars")
 public class ARSController
 {
+	@Autowired
+	private EurekaClient eurekaClient;
+	
 	@RequestMapping(value={"", "/index"})
 	public String login(HttpServletRequest request) {
 	    return "/index.jsp";
@@ -98,7 +105,7 @@ public class ARSController
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		String url="http://localhost:1234/airport/add";
+		String url = getAirportUrl() + "/airport/add";
 		
 		/*String abbreviation = request.getParameter("abbreviation");
 		String airportName = request.getParameter("airportName");
@@ -113,5 +120,57 @@ public class ARSController
 		System.out.println(newAirport);
 		
 		return "success.jsp";
+	}
+	
+	
+	/*
+	 * Utility Methods to get Microservice URLs
+	 */
+	public String getAirportUrl()
+	{
+	    Application application = eurekaClient.getApplication("airport-service");
+	    
+	    InstanceInfo instanceInfo = application.getInstances().get(0);
+	    
+	    String hostname = instanceInfo.getHostName();
+	    int port = instanceInfo.getPort();
+	    
+	    return hostname + ":" + port;
+	}
+	
+	public String getBookingUrl()
+	{
+	    Application application = eurekaClient.getApplication("booking-service");
+	    
+	    InstanceInfo instanceInfo = application.getInstances().get(0);
+	    
+	    String hostname = instanceInfo.getHostName();
+	    int port = instanceInfo.getPort();
+	    
+	    return hostname + ":" + port;
+	}
+	
+	public String getFlightUrl()
+	{
+	    Application application = eurekaClient.getApplication("flight-service");
+	    
+	    InstanceInfo instanceInfo = application.getInstances().get(0);
+	    
+	    String hostname = instanceInfo.getHostName();
+	    int port = instanceInfo.getPort();
+	    
+	    return hostname + ":" + port;
+	}
+	
+	public String getUserUrl()
+	{
+	    Application application = eurekaClient.getApplication("user-service");
+	    
+	    InstanceInfo instanceInfo = application.getInstances().get(0);
+	    
+	    String hostname = instanceInfo.getHostName();
+	    int port = instanceInfo.getPort();
+	    
+	    return hostname + ":" + port;
 	}
 }
