@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,7 +66,7 @@ public class ARSController
 	}
 	
 	@PostMapping(path="/searchFlight")
-	public String searchFlight(HttpServletRequest request, Model model) throws JSONException
+	public String searchFlight(HttpServletRequest request, Model model)
 	{
 		RestTemplate restTemplate = new RestTemplate();
 		
