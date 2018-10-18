@@ -28,8 +28,6 @@
 <input type="hidden" name="noOfPassengers" value="${noOfPassengers}">
 <input type="hidden" name="classType" value="${classType}">
 <input type="hidden" name="totalFare" value="${totalfare}">
-<input type="hidden" name="srcCity" value="${flight.depCity}">
-<input type="hidden" name="destCity" value="${flight.arrCity}">
 <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Confirm Booking</button>

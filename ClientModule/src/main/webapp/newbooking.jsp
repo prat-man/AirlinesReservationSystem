@@ -25,7 +25,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Number of Passengers:</label>
       <div class="col-sm-10">
-        <input class="form-control" id="focusedInput" type="text" name="noOfPassengers" >
+        <input class="form-control" id="focusedInput" type="number" name="noOfPassengers" >
       </div>
       </div>
     <input type="hidden" name="bookingId" value="${bookingId}">
