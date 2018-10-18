@@ -34,13 +34,13 @@ function showResult(str) {
 </script>
 </head>
 <body>
-<jsp:include page='header.jsp'>
-</jsp:include>
+<jsp:include page='header.jsp'/>
+
 	<div class="container">
 		<div class="row">
 			<h3>Search a flight</h3>
 			<div class="flightSearchBox col-lg-12">
-				<form action="searchFlight" method="POST">
+				<form action="/ars/searchFlight" method="GET">
 					<input class="form-control" type="text"  name="fromCity" placeholder="From City" onkeyup="showResult(this.value)">
 					<div id="getCityList"></div>
 					<input class="form-control" type="text"  name="toCity" placeholder="To City">
@@ -51,7 +51,6 @@ function showResult(str) {
 			<div class="body">Rest of the body</div>
 		</div>
 	</div>
-	<jsp:include page='footer.jsp'>
-</jsp:include>
+	<jsp:include page='footer.jsp'/>
 </body>
 </html>

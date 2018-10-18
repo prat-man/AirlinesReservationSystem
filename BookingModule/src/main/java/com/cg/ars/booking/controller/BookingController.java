@@ -3,12 +3,14 @@ package com.cg.ars.booking.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.ars.booking.dto.Booking;
@@ -22,9 +24,10 @@ public class BookingController
 	@Autowired
 	BookingService B_SER;
 	
-	@PostMapping(value="/add")
-	public Booking insertBooking(@Valid @RequestBody Booking booking)
+	@PostMapping("/add")
+	public Booking insertBooking(@RequestBody Booking booking)
 	{
+		System.out.println(booking);
 		return B_SER.insert(booking);
 	}
 	
@@ -50,6 +53,5 @@ public class BookingController
 	public String generateBookingId(@PathVariable("flightNo") String flightNo)
 	{
 		return B_SER.generateBookingId(flightNo);
-		
 	}
 }

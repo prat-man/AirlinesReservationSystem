@@ -14,8 +14,8 @@ public class Booking
 	private String flightNo;
 	
 	@NotNull(message= "Username cannot be null")
-	@Pattern(regexp="[A-Za-z][A-Za-z0-9\\.\\-\\_]{7,39}",message="Invalid Username. Must be atleast 8 characters long. Must start with an alphabet. Can contain UPPERCASE, lowercase, digits, ., -, and _")
-	private String username;
+	@Pattern(regexp="[A-Za-z]{7,39}",message="Invalid Username. Must be atleast 8 characters long. Must start with an alphabet. Can contain UPPERCASE, lowercase, digits, ., -, and _")
+	private String name;
 	
 	@NotNull(message= "Number of Passengers cannot be null")
 	private Integer noOfPassengers;
@@ -23,8 +23,6 @@ public class Booking
 	private String classType;
 	
 	private Double totalFare;
-	
-	private String seatNumber;
 	
 	@NotNull(message= "Credit Card Information cannot be null")
 	@Pattern(regexp="[0-9]{16}",message="Invalid Credit Card Information. Must be exactly 16 digits")
@@ -58,12 +56,12 @@ public class Booking
 		this.flightNo = flightNo;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String username) {
+		this.name = username;
 	}
 
 	public Integer getNoOfPassengers() {
@@ -90,13 +88,6 @@ public class Booking
 		this.totalFare = totalFare;
 	}
 
-	public String getSeatNumber() {
-		return seatNumber;
-	}
-
-	public void setSeatNumber(String seatNumber) {
-		this.seatNumber = seatNumber;
-	}
 
 	public String getCreditCardInfo() {
 		return creditCardInfo;
@@ -124,9 +115,9 @@ public class Booking
 
 	@Override
 	public String toString() {
-		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + username
+		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + name
 				+ ", noOfPassengers=" + noOfPassengers + ", classType=" + classType + ", totalFare=" + totalFare
-				+ ", seatNumber=" + seatNumber + ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity
+				+ ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity
 				+ ", destCity=" + destCity + "]";
 	}
 }
