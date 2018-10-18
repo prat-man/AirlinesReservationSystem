@@ -19,38 +19,35 @@
 </c:if>
 <c:if test="${not empty flightList}">
 <h3>Flights from ${fromCity} to ${toCity} on ${depDate}</h3>
-<c:forEach items="${flightList}" var="result">
-    <div class="resultTable">
-    	<table border="3" align="center">
+<div class="resultTable">
+	<table border="3" align="center">
+		<tr align="center">
+			<th>Flight Number</th>
+			<th>Airline</th>
+			<th>Departure Time</th>
+			<th>Arrival Time</th>
+			<th>Choose Class</th>
+			<th>Book Now</th>
+		</tr>
+    	<c:forEach items="${flightList}" var="result">
     		<tr align="center">
-    			<th>Flight Number</th>
-    			<th>Airline</th>
-    			<th>Departure Time</th>
-    			<th>Arrival Time</th>
-    			<th>Choose Class</th>
-    			<th>Book Now</th>
-    		</tr>
-    		<tr align="center">
-    			<td rowspan="2">${result.flightNo}</td>
-    			<td rowspan="2">${result.airline}</td>
-    			<td rowspan="2">${result.depTime}</td>
-    			<td rowspan="2">${result.arrTime}</td>
+    			<td>${result.flightNo}</td>
+    			<td>${result.airline}</td>
+    			<td>${result.depTime}</td>
+    			<td>${result.arrTime}</td>
     			<form action="/ars/newBooking/${result.flightNo}" Method="get" id="bookform">
-    			<td>	<input type="radio" name="class" value="First@${result.firstSeatsFare}" checked> FirstClass: ${result.firstSeatsFare}</td>
-  				
-  				<td rowspan="2"><button type="submit" class="btn btn-danger" form="bookform" >Book</button></td>
-  				
-    		</tr>
-    		<tr align="center">
-    		<td><input type="radio" name="class" value="Business@${result.bussSeatsFare}"> BusinessClass: ${result.bussSeatsFare}</td>
+    			<td>
+	    			<input type="radio" name="class" value="First@${result.firstSeatsFare}" checked> FirstClass: ${result.firstSeatsFare}<br/>
+	  				<input type="radio" name="class" value="Business@${result.bussSeatsFare}"> BusinessClass: ${result.bussSeatsFare}
+  				</td>
+  				<td><button type="submit" class="btn btn-danger" form="bookform">Book</button></td>
   				</form>
     		</tr>
-    	</table>
-    </div>
-</c:forEach>
+    	</c:forEach>
+	</table>
+</div>
 </c:if>
 </div>
 <jsp:include page='footer.jsp'/>
 </body>
 </html>
-
