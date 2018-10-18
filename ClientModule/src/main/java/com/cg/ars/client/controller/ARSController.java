@@ -42,10 +42,17 @@ public class ARSController
 	    return "/index.jsp";
 	}
 	
+	@RequestMapping(value="adminPanel")
+	public String adminPanel(HttpServletRequest request) {
+	    return "/adminPanel.jsp";
+	}
+	
 	@RequestMapping(value="/addFlight")	
 	public String addFlight(HttpServletRequest request,Model model) {
 		Flight flight = new Flight();
+		
 		model.addAttribute(flight);
+		
 		return "/addflight.jsp";
 	}
 	
