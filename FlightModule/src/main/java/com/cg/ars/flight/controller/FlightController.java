@@ -65,12 +65,31 @@ public class FlightController
     }
     
     @PutMapping(path="/updateSeats/{flightNo}/{classType}/{seats}")
-    public Flight updateSeats(@PathVariable("flightNo") String flightNo, @PathVariable("classType") String classType, @PathVariable("seats") String seats)
+    public void updateSeats(@PathVariable("flightNo") String flightNo, @PathVariable("classType") String classType, @PathVariable("seats") String seats) throws FlightException
     {
     	Flight flight = service.findByflightNo(flightNo);
     	
+    	int seatsN = Integer.parseInt(seats);
+    	
     	switch (classType) {
-    		case 
+    		case Flight.FIRST:
+		    			if (seatsN <= 0 || seatsN > flight.getFirstSeats()) {
+		    	    		throw new FlightException("Invalid No. of Seats", "/flight/updateSeats");
+		    	    	}
+						flight.setFirstSeats(flight.getFirstSeats() - seatsN);
+						break;
+			
+			case Flight.BUSINESS:
+						if (seatsN <= 0 || seatsN > flight.getBussSeats()) {
+		    	    		throw new FlightException("Invalid No. of Seats", "/flight/updateSeats");
+		    	    	}
+						flight.setBussSeats(flight.getBussSeats() - seatsN);
+						break;
+			
+			default:
+						throw new FlightException("Invalid Class Type [classType=" + classType + "]", "/flight/updateSeats");
     	}
+
+    	service.save(flight);
     }
 }

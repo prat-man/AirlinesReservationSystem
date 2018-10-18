@@ -11,10 +11,11 @@
 <div class="container">
 <ul>
 <li>Booking Id: ${confirmedBooking.bookingId}</li>
-<li>Name : ${confirmedBooking.name}</li>
+<li>Name: ${confirmedBooking.name}</li>
 <li>Total Fare: ${confirmedBooking.totalFare}</li>
-<li>Departure Date: ${confirmedBooking.depDate}</li>
-<li>Source City: ${confirmedBooking.srcCity}</li>
+<li>Date: ${depDate}</li>
+<li>From: ${confirmedBooking.srcCity}</li>
+<li>To: ${confirmedBooking.destCity}</li>
 </ul>
 </div>
 <jsp:include page="footer.jsp"/>
