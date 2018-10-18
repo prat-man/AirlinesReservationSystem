@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -31,16 +32,12 @@ public class Flight
 	@Pattern(regexp = "([A-Z][a-z]+ )*[A-Z][a-z]+",message="Arrival City should be of the format:[Xyz Pqr]")
 	private String arrCity;
 	
-	@NotNull(message="Departure Date cannot be Empty")
 	private LocalDate depDate;
 	
-	@NotNull(message="Arrival City cannot be Empty")
 	private LocalDate arrDate;
 	
-	@NotNull(message="Departure Time cannot be Empty")
 	private LocalTime depTime;
 	
-	@NotNull(message="Arrival Time cannot be Empty")
 	private LocalTime arrTime;
 	
 	@NotNull(message="Seats cannot be Empty")
