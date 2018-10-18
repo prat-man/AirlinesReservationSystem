@@ -8,7 +8,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
-<title>Welcome-Airline Reservation System</title>
+<title>Welcome to Airline Reservation System</title>
 <script>
 function showResult(str) {
 	  if (str.length==0) { 
@@ -29,7 +29,7 @@ function showResult(str) {
 	      document.getElementById("getCityList").style.border="1px solid #A5ACB2";
 	    }
 	  }
-	  xmlhttp.open("GET","/ars/autocomplete/"+str,true);
+	  xmlhttp.open("GET", "/ars/autocomplete/" + str, true);
 	  xmlhttp.send();
 	}
 </script>
