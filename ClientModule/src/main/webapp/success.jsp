@@ -33,6 +33,6 @@
 		<h3>Operation Unsuccessful!</h3> 
    	</div>
 	</c:if>
-<jsp:include page="footer.jsp">
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

@@ -20,8 +20,8 @@
 					<input class="form-control" type="text"  name="fromCity" placeholder="From City" onkeyup="showResult(this.value)">
 					<div id="getCityList"></div>
 					<input class="form-control" type="text"  name="toCity" placeholder="To City">
-					<input class="form-control" type="date"  name="depDate">
-					<input type="submit" value="Search">
+					<input class="form-control" type="date"  name="depDate"><br/>
+					<button type="submit" class="btn btn-primary">Search</button>
 				</form>
 			</div>
 			<div class="body"></div>
