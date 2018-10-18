@@ -92,14 +92,6 @@ public class Booking
 		this.totalFare = totalFare;
 	}
 
-	public String getSeatNumber() {
-		return seatNumber;
-	}
-
-	public void setSeatNumber(String seatNumber) {
-		this.seatNumber = seatNumber;
-	}
-
 	public String getCreditCardInfo() {
 		return creditCardInfo;
 	}
@@ -128,7 +120,6 @@ public class Booking
 	public String toString() {
 		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + username
 				+ ", noOfPassengers=" + noOfPassengers + ", classType=" + classType + ", totalFare=" + totalFare
-				+ ", seatNumber=" + seatNumber + ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity
-				+ ", destCity=" + destCity + "]";
+				+ ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity + ", destCity=" + destCity + "]";
 	}
 }

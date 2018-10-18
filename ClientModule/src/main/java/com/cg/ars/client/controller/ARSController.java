@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,11 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
 import com.cg.ars.client.dto.Flight;
-import com.cg.ars.client.dto.User;
+
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
@@ -45,7 +42,7 @@ public class ARSController
 	    return "/index.jsp";
 	}
 	
-	@RequestMapping(value="/addflight")	
+	@RequestMapping(value="/addFlight")	
 	public String addFlight(HttpServletRequest request,Model model) {
 		Flight flight = new Flight();
 		model.addAttribute(flight);
@@ -53,25 +50,25 @@ public class ARSController
 	}
 	
 	@PostMapping(value="/addFlightAction")
-	public String addFlightAction(@ModelAttribute("flight") Flight flight, HttpServletRequest request) {
-//		String airline = request.getParameter("airline");
-//		String depCity = request.getParameter("depCity");
-//		String arrCity = request.getParameter("arrCity");
-//		String depDate = request.getParameter("depDate");
-//		String arrDate = request.getParameter("arrDate");
-//		String depTime = request.getParameter("depTime");
-//		String arrTime = request.getParameter("arrTime");
-//		String firstSeats = request.getParameter("firstSeats");
-//		String firstSeatFare = request.getParameter("firstSeatsFare");
-//		String bussSeat = request.getParameter("bussSeats");
-//		String businessSeatFare = request.getParameter("bussSeatsFare");
-		RestTemplate restTemplate = new RestTemplate();
+	public String addFlightAction(@ModelAttribute("flight") Flight flight) {
+		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		
+		HttpEntity<Flight> entity = new HttpEntity<>(flight, headers);
+		
 		String url = getFlightUrl() + "/flight/add";
-		Object object = restTemplate.postForObject(url, flight, Flight.class);
+		
+		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
+		
+		System.out.println(newAirport.getBody());
+		
 		return "/success.jsp";
 	}
 	
-	@RequestMapping("/loginAction")
+	/*@RequestMapping("/loginAction")
 	public String loginAction(HttpServletRequest request)
 	{
 		String url = "http://localhost:8081/user/verify";
@@ -106,7 +103,7 @@ public class ARSController
 		else {
 			return "failure";
 		}
-	}
+	}*/
 	
 	@PostMapping(path="/searchFlight")
 	public String searchFlight(HttpServletRequest request, Model model)
@@ -196,8 +193,6 @@ public class ARSController
 	@PostMapping("/payment")
 	public String payment(HttpServletRequest request, Model model)
 	{
-		RestTemplate restTemplate = new RestTemplate();
-		
 		String name = request.getParameter("name");
 		String noOfPassengers = request.getParameter("noOfPassengers");
 		String bookingId = request.getParameter("bookingId");
