@@ -182,9 +182,14 @@ public class ARSController
 	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
 		
 		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
-		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flightNo;
+
 		Flight flight = restTemplate.getForObject(url1,Flight.class);
-		String bookingId = restTemplate.getForObject(url2, String.class);		
+		
+		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flight.getAirline();
+		
+		String bookingId = restTemplate.getForObject(url2, String.class);
+		
+		System.out.println(bookingId);
 		String classFare = request.getParameter("class");
 		String arr[]=classFare.split("@");
 		Double fare = Double.parseDouble(arr[1]);
@@ -235,13 +240,14 @@ public class ARSController
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(acceptableMediaTypes);
 		
+        Integer noOfPassengers = Integer.parseInt(request.getParameter("noOfPassengers"));
 		
 		newBooking.setBookingId(request.getParameter("bookingId"));
 		newBooking.setClassType(request.getParameter("classType"));
 		newBooking.setCreditCardInfo(request.getParameter("creditCardInfo"));
 		newBooking.setDestCity(request.getParameter("destCity"));
 		newBooking.setFlightNo(request.getParameter("flightNo"));
-		newBooking.setNoOfPassengers(Integer.parseInt(request.getParameter("noOfPassengers")));
+		newBooking.setNoOfPassengers(noOfPassengers);
 		newBooking.setSrcCity(request.getParameter("srcCity"));
 		newBooking.setTotalFare(Double.parseDouble(request.getParameter("totalFare")));
 		newBooking.setName(request.getParameter("name"));
@@ -250,6 +256,7 @@ public class ARSController
 		HttpEntity<Booking> entity = new HttpEntity<>(newBooking,headers);
 		
 		ResponseEntity<Booking> confirmedBooking = restTemplate.postForEntity(url, entity, Booking.class);
+		System.out.println(confirmedBooking);
 		model.addAttribute("confirmedBooking",confirmedBooking);
 		
 		return "/bookingSuccess";

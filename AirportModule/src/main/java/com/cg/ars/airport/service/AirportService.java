@@ -10,5 +10,4 @@ public interface AirportService extends MongoRepository<Airport, String> {
 
 	public Airport findByAbbreviation(String abbreviation);
 
-
 }

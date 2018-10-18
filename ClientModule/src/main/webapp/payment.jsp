@@ -37,13 +37,11 @@
      </div>
 </div>
 <input type="hidden" name="bookingId" value="${bookingId}">
-<input type="hidden" name="flightNo" value="${flightNo}">
+<input type="hidden" name="flightNo" value="${flight.flightNo}">
 <input type="hidden" name="name" value="${name}">
 <input type="hidden" name="noOfPassengers" value="${noOfPassengers}">
 <input type="hidden" name="classType" value="${classType}">
 <input type="hidden" name="totalFare" value="${totalfare}">
-<input type="hidden" name="srcCity" value="${flight.depCity}">
-<input type="hidden" name="destCity" value="${flight.arrCity}">
 <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
 <tr align="right"><th colspan="2">       <button type="submit" class="btn btn-warning">Confirm Booking</button></th></tr>
