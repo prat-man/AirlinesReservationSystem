@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +8,12 @@
 <title>Add Airport</title>
 </head>
 <body>
-<h3>Add Airport</h3>
-			<div class="addairport">
-				<form action="addAirportAction" method="POST">
-					<input type="text" name="abbreviation" placeholder="Abbreviation">
-					<input type="text" name="airportName" placeholder="Airport Name">
-					<input type="text" name="location" placeholder="Location">
-					<input type="submit" value="Add">
-				</form>
-			</div>
+	<h3>Add Airport</h3>
+	<f:form action="addAirportAction" method="POST" modelAttribute="airport">
+		<f:input path="abbreviation" placeholder="Abbreviation" />
+		<f:input path="airportName" placeholder="Airport Name" />
+		<f:input path="location" placeholder="Location" />
+		<input type="submit" value="Add Airport" />
+	</f:form>
 </body>
 </html>

@@ -20,7 +20,7 @@
 		<div>
 			<h3>Search a flight</h3>
 			<div class="flightSearchBox">
-				<form action="searchFlight" method="POST">
+				<form action="/ars/searchFlight" method="POST">
 					<input type="text" name="fromCity" placeholder="From City">
 					<input type="text" name="toCity" placeholder="To City">
 					<input type="date" name="depDate">
