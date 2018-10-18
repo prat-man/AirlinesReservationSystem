@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,32 @@ public class ARSController
 	@RequestMapping(value={"", "/index"})
 	public String login(HttpServletRequest request) {
 	    return "/index.jsp";
+	}
+	
+	@RequestMapping(value="/addflight")	
+	public String addFlight(HttpServletRequest request,Model model) {
+		Flight flight = new Flight();
+		model.addAttribute(flight);
+		return "/addflight.jsp";
+	}
+	
+	@PostMapping(value="/addFlightAction")
+	public String addFlightAction(@ModelAttribute("flight")Flight flight,HttpServletRequest request) {
+//		String airline = request.getParameter("airline");
+//		String depCity = request.getParameter("depCity");
+//		String arrCity = request.getParameter("arrCity");
+//		String depDate = request.getParameter("depDate");
+//		String arrDate = request.getParameter("arrDate");
+//		String depTime = request.getParameter("depTime");
+//		String arrTime = request.getParameter("arrTime");
+//		String firstSeats = request.getParameter("firstSeats");
+//		String firstSeatFare = request.getParameter("firstSeatsFare");
+//		String bussSeat = request.getParameter("bussSeats");
+//		String businessSeatFare = request.getParameter("bussSeatsFare");
+		RestTemplate restTemplate = new RestTemplate();
+		String url = getFlightUrl() + "/flight/add" ;
+		Object object = restTemplate.postForObject(url, flight, Flight.class);
+		return "/success.jsp";
 	}
 	
 	@RequestMapping("/loginAction")
