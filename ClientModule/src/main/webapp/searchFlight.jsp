@@ -14,7 +14,11 @@
 <body>
 <jsp:include page='header.jsp'/>
 <div class="container">
-<h3>Showing search Results for all flights from ${fromCity} To ${toCity} on ${depDate}</h3>
+<c:if test="${empty flightList}">
+<h3>No flights found from ${fromCity} to ${toCity} on ${depDate}</h3>
+</c:if>
+<c:if test="${not empty flightList}">
+<h3>Flights from ${fromCity} to ${toCity} on ${depDate}</h3>
 <c:forEach items="${flightList}" var="result">
     <div class="resultTable">
     	<table border="3" align="center">
@@ -38,12 +42,13 @@
   				
     		</tr>
     		<tr align="center">
-    		<td><input type="radio" name="class" value="Business@${result.firstSeatsFare}"> BusinessClass: ${result.bussSeatsFare}</td>
+    		<td><input type="radio" name="class" value="Business@${result.bussSeatsFare}"> BusinessClass: ${result.bussSeatsFare}</td>
   				</form>
     		</tr>
     	</table>
     </div>
 </c:forEach>
+</c:if>
 </div>
 <jsp:include page='footer.jsp'/>
 </body>

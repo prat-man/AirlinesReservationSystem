@@ -58,7 +58,7 @@ public class ARSController
 	}
 	
 	@PostMapping(value="/addFlightAction")
-	public String addFlightAction(@ModelAttribute("flight") Flight flight) {
+	public String addFlightAction(@ModelAttribute("flight") Flight flight, Model model) {
 		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 		
@@ -70,8 +70,6 @@ public class ARSController
 		String url = getFlightUrl() + "/flight/add";
 		
 		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
-		
-		System.out.println(newAirport.getBody());
 		
 		return "/success.jsp";
 	}
@@ -173,7 +171,6 @@ public class ARSController
 		
 		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
 		
-		System.out.println(newAirport.getBody());
 		
 		return "/success.jsp";
     }
