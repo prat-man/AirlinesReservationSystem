@@ -45,7 +45,9 @@ public class ARSController
 	@RequestMapping(value="/addFlight")	
 	public String addFlight(HttpServletRequest request,Model model) {
 		Flight flight = new Flight();
+		
 		model.addAttribute(flight);
+		
 		return "/addflight.jsp";
 	}
 	
