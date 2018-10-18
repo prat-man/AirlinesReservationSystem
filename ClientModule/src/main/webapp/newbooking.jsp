@@ -13,19 +13,24 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="container">
-<h3>Passenger Details</h3>
+<table border="1" align="center">
+<tr align="center"><th colspan="2"><h3>Passenger Details</h3></th></tr>
 <div class="detailTable" align="center">
 <form class="form-horizontal" action="/ars/payment" method="post">
    <div class="form-group">
-      <label class="col-sm-2 control-label">Name:</label>
-      <div class="col-sm-10">
-        <input class="form-control" id="focusedInput" type="text" name="name" >
+      <tr>
+      <th><label class="col-sm-2 control-label">Name:</label></th>
+      <td><div class="col-sm-12">
+        <input class="form-control" id="focusedInput" type="text" name="name" ></td>
+      </tr>
       </div>
       </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Number of Passengers:</label>
-      <div class="col-sm-10">
-        <input class="form-control" id="focusedInput" type="text" name="noOfPassengers" >
+   	  <tr>
+      <th><label class="col-sm-10 control-label">Number of Passengers:</label></th>
+      <td><div class="col-sm-12">
+        <input class="form-control" id="focusedInput" type="text" name="noOfPassengers" ></td>
+      </tr>
       </div>
       </div>
     <input type="hidden" name="bookingId" value="${bookingId}">
@@ -36,11 +41,15 @@
     <input type="hidden" name="arrCity" value="${flight.arrCity}">
     
     <div class="form-group">        
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Proceed to Payment</button>
+      <tr><td colspan="2" align="right">
+      <div class="col-sm-offset-6 col-sm-10">
+        <button type="submit" class="btn btn-success">Proceed to Payment</button>
       </div>
+      </td>
+      </tr>
     </div>
   </form>
+  </table>
   </div>
   </div>
 <jsp:include page="footer.jsp"/>

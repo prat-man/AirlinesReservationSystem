@@ -39,13 +39,13 @@ function showResult(str) {
 	<div class="container">
 		<div class="row">
 			<h3 align="center">Search a flight</h3>
-			<div class="flightSearchBox col-lg-12">
+			<div class="flightSearchBox col-lg-6">
 				<form action="/ars/searchFlight" method="GET">
 					<input class="form-control" type="text"  name="fromCity" placeholder="From City" onkeyup="showResult(this.value)">
 					<div id="getCityList"></div>
 					<input class="form-control" type="text"  name="toCity" placeholder="To City">
 					<input class="form-control" type="date"  name="depDate">
-					<input type="submit" value="Add">
+					<input type="submit" value="Search">
 				</form>
 			</div>
 			<div class="body"></div>
