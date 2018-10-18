@@ -35,20 +35,19 @@ function showResult(str) {
 </head>
 <body>
 <jsp:include page='header.jsp'/>
-
 	<div class="container">
 		<div class="row">
-			<h3>Search a flight</h3>
+			<h3 align="center">Search a flight</h3>
 			<div class="flightSearchBox col-lg-12">
 				<form action="/ars/searchFlight" method="GET">
 					<input class="form-control" type="text"  name="fromCity" placeholder="From City" onkeyup="showResult(this.value)">
 					<div id="getCityList"></div>
 					<input class="form-control" type="text"  name="toCity" placeholder="To City">
 					<input class="form-control" type="date"  name="depDate">
-					<input type="submit" value="Search">
+					<input type="submit" value="Add">
 				</form>
 			</div>
-			<div class="body">Rest of the body</div>
+			<div class="body"></div>
 		</div>
 	</div>
 	<jsp:include page='footer.jsp'/>

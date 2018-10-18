@@ -55,14 +55,6 @@ public class Flight
 	@Min(value=1000)
 	private Double bussSeatsFare;
 	
-	@NotNull(message="Departure Airport cannot be Empty")
-	@Pattern(regexp = "[A-Z]{3,4}",message="Departure Airport should be of the format:[WXYZ]")
-	private String depAirport;
-	
-	@NotNull(message="Arrival Airport cannot be Empty")
-	@Pattern(regexp = "[A-Z]{3,4}",message="Departure Airport should be of the format:[WXYZ]")
-	private String arrAirport;
-	
 	@Transient
 	public static final String FIRST = "First";
 	
@@ -136,7 +128,7 @@ public class Flight
 	public void setArrTime(LocalTime arrTime) {
 		this.arrTime = arrTime;
 	}
-
+	
 	public Integer getFirstSeats() {
 		return firstSeats;
 	}
@@ -169,28 +161,11 @@ public class Flight
 		this.bussSeatsFare = bussSeatsFare;
 	}
 
-	public String getDepAirport() {
-		return depAirport;
-	}
-
-	public void setDepAirport(String depAirport) {
-		this.depAirport = depAirport;
-	}
-
-	public String getArrAirport() {
-		return arrAirport;
-	}
-
-	public void setArrAirport(String arrAirport) {
-		this.arrAirport = arrAirport;
-	}
-
 	@Override
 	public String toString() {
 		return "Flight [flightNo=" + flightNo + ", airline=" + airline + ", depCity=" + depCity + ", arrCity=" + arrCity
 				+ ", depDate=" + depDate + ", arrDate=" + arrDate + ", depTime=" + depTime + ", arrTime=" + arrTime
 				+ ", firstSeats=" + firstSeats + ", firstSeatsFare=" + firstSeatsFare + ", bussSeats=" + bussSeats
-				+ ", bussSeatsFare=" + bussSeatsFare + ", depAirport=" + depAirport + ", arrAirport=" + arrAirport
-				+ "]";
+				+ ", bussSeatsFare=" + bussSeatsFare + "]";
 	}
 }

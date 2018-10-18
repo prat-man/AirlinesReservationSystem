@@ -8,13 +8,16 @@
 <title>Add Airport</title>
 </head>
 <body>
-	<h3>Add Airport</h3>
-	<f:form action="addAirportAction" method="POST"
-		modelAttribute="airport">
-		<f:input path="abbreviation" placeholder="Abbreviation" />
-		<f:input path="airportName" placeholder="Airport Name" />
-		<f:input path="location" placeholder="Location" />
-		<input type="submit" value="Add Airport" />
+	<h1 align="center">Add Airport</h1>
+	<table border="3" align="center">
+	<f:form action="addAirportAction" method="POST" modelAttribute="airport">
+	<tr><th colspan="2" align="center">Airport Details <img alt="location" src="/resources/airport.png"  width="64" height="64"></th></tr>
+	<tr><td align="right"> Abbreviation :</td><td>	<f:input path="abbreviation" placeholder="Abbreviation" /> </td></tr>
+	<tr><td align="right"> Airport Name :</td><td>	<f:input path="airportName" placeholder="Airport Name" />  </td></tr>
+	<tr><td align="right"> Airport Location :</td><td>	<f:input path="location" placeholder="Location" />         </td></tr>
+	<tr><td colspan="2" align="right">	<input type="submit" value="Add Airport" />                </td></tr>
 	</f:form>
+	</table>
+	
 </body>
 </html>
