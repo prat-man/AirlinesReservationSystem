@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
 <title>Add Airport</title>
 </head>
 <body>
+<jsp:include page='header.jsp'/>
 	<h1 align="center">Add Airport</h1>
 	<table border="3" align="center">
 	<f:form action="addAirportAction" method="POST" modelAttribute="airport">

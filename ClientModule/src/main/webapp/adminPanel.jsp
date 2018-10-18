@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
 <title>Admin-Panel</title>
 </head>
 <body>
+<jsp:include page='header.jsp'/>
 <table border="2" align="center" >
 <tr><th><h1>Admin Panel<br><img alt="admin" src="/resources/admin.png"></h1></th></tr>
 <tr><td align="center"><h2><a href="/ars/addFlight">Add Flight</a></h2><img alt="admin" width="64" height="64" src="/resources/flight.png"></td></tr>
