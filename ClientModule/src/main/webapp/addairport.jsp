@@ -9,7 +9,8 @@
 </head>
 <body>
 	<h3>Add Airport</h3>
-	<f:form action="addAirportAction" method="POST" modelAttribute="airport">
+	<f:form action="addAirportAction" method="POST"
+		modelAttribute="airport">
 		<f:input path="abbreviation" placeholder="Abbreviation" />
 		<f:input path="airportName" placeholder="Airport Name" />
 		<f:input path="location" placeholder="Location" />
