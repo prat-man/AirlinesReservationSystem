@@ -13,8 +13,8 @@ public class Booking
 	@Pattern(regexp="[A-Z]{3,4}[0-9]{4,6}",message="Invalid Flight Number. Must be 3 to 4 UPPERCASE alphabets followed by 4 to 6 digits")
 	private String flightNo;
 	
-	@NotNull(message= "Username cannot be null")
-	@Pattern(regexp="[A-Za-z]{7,39}",message="Invalid Username. Must be atleast 8 characters long. Must start with an alphabet. Can contain UPPERCASE, lowercase, digits, ., -, and _")
+	@NotNull(message= "Name cannot be null")
+	@Pattern(regexp="([A-Z][a-z]+ )*[A-Z][a-z]+",message="Invalid Name. Must start with UPPERCASE followed by lowercase alphabets")
 	private String name;
 	
 	@NotNull(message= "Number of Passengers cannot be null")
@@ -115,7 +115,7 @@ public class Booking
 
 	@Override
 	public String toString() {
-		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + name
+		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", name=" + name
 				+ ", noOfPassengers=" + noOfPassengers + ", classType=" + classType + ", totalFare=" + totalFare
 				+ ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity
 				+ ", destCity=" + destCity + "]";

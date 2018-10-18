@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,13 +52,25 @@ public class FlightController
         return service.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
     }
     
-    @RequestMapping(path="/getCityList/{query}")
-    public List<String> autocomplete(@PathVariable("query") String depCity){
+    @GetMapping(path="/getCityList/{query}")
+    public List<String> autocomplete(@PathVariable("query") String depCity)
+    {
 		return service.findByDepCityLike(depCity);	
     }
     
-    @RequestMapping(path="/searchByFlightNo/{flightNo}")
-    public Flight searchByFlightNo(@PathVariable String flightNo) {
+    @GetMapping(path="/searchByFlightNo/{flightNo}")
+    public Flight searchByFlightNo(@PathVariable("flightNo") String flightNo)
+    {
     	return service.findByflightNo(flightNo);
+    }
+    
+    @PutMapping(path="/updateSeats/{flightNo}/{classType}/{seats}")
+    public Flight updateSeats(@PathVariable("flightNo") String flightNo, @PathVariable("classType") String classType, @PathVariable("seats") String seats)
+    {
+    	Flight flight = service.findByflightNo(flightNo);
+    	
+    	switch (classType) {
+    		case 
+    	}
     }
 }
