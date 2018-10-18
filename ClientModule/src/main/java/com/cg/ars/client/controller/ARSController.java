@@ -40,7 +40,7 @@ public class ARSController
 	}
 	
 	@PostMapping(value="/addFlightAction")
-	public String addFlightAction(@ModelAttribute("flight")Flight flight,HttpServletRequest request) {
+	public String addFlightAction(@ModelAttribute("flight") Flight flight, HttpServletRequest request) {
 //		String airline = request.getParameter("airline");
 //		String depCity = request.getParameter("depCity");
 //		String arrCity = request.getParameter("arrCity");
@@ -53,7 +53,7 @@ public class ARSController
 //		String bussSeat = request.getParameter("bussSeats");
 //		String businessSeatFare = request.getParameter("bussSeatsFare");
 		RestTemplate restTemplate = new RestTemplate();
-		String url = getFlightUrl() + "/flight/add" ;
+		String url = getFlightUrl() + "/flight/add";
 		Object object = restTemplate.postForObject(url, flight, Flight.class);
 		return "/success.jsp";
 	}
