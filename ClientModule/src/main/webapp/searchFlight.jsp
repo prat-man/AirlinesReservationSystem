@@ -8,6 +8,7 @@
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
 <title>Flight Search Result</title>
 </head>
 <body>

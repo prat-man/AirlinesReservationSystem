@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
+<title>Success</title>
 </head>
 <body>
 	<h1>The result is: ${result}</h1>

@@ -8,9 +8,11 @@
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
 <title>Add Flight</title>
 </head>
 <body>
+<jsp:include page='header.jsp'/>
 	<div class="container">
 		<div>
 			<h1 align="center">Add Flight</h1>
