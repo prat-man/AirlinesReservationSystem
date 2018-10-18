@@ -1,17 +1,24 @@
 package com.cg.ars.client.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
@@ -30,16 +37,43 @@ public class ARSController
 	@Autowired
 	private EurekaClient eurekaClient;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@RequestMapping(value={"", "/index"})
 	public String login(HttpServletRequest request) {
 	    return "/index.jsp";
 	}
 	
+	@RequestMapping(value="/addflight")	
+	public String addFlight(HttpServletRequest request,Model model) {
+		Flight flight = new Flight();
+		model.addAttribute(flight);
+		return "/addflight.jsp";
+	}
+	
+	@PostMapping(value="/addFlightAction")
+	public String addFlightAction(@ModelAttribute("flight") Flight flight, HttpServletRequest request) {
+//		String airline = request.getParameter("airline");
+//		String depCity = request.getParameter("depCity");
+//		String arrCity = request.getParameter("arrCity");
+//		String depDate = request.getParameter("depDate");
+//		String arrDate = request.getParameter("arrDate");
+//		String depTime = request.getParameter("depTime");
+//		String arrTime = request.getParameter("arrTime");
+//		String firstSeats = request.getParameter("firstSeats");
+//		String firstSeatFare = request.getParameter("firstSeatsFare");
+//		String bussSeat = request.getParameter("bussSeats");
+//		String businessSeatFare = request.getParameter("bussSeatsFare");
+		RestTemplate restTemplate = new RestTemplate();
+		String url = getFlightUrl() + "/flight/add";
+		Object object = restTemplate.postForObject(url, flight, Flight.class);
+		return "/success.jsp";
+	}
+	
 	@RequestMapping("/loginAction")
 	public String loginAction(HttpServletRequest request)
 	{
-		RestTemplate restTemplate = new RestTemplate();
-		
 		String url = "http://localhost:8081/user/verify";
 		
 		Object object = restTemplate.postForObject(url, request, Object.class);
@@ -62,8 +96,6 @@ public class ARSController
 	@RequestMapping("/registerAction")
 	public String registerAction(HttpServletRequest request)
 	{
-		RestTemplate restTemplate = new RestTemplate();
-		
 		String url = "http://localhost:8081/user/add";
 		
 		Object object = restTemplate.postForObject(url, request, Object.class);
@@ -79,9 +111,7 @@ public class ARSController
 	@PostMapping(path="/searchFlight")
 	public String searchFlight(HttpServletRequest request, Model model)
 	{
-		RestTemplate restTemplate = new RestTemplate();
-		
-		String url="http://localhost:8081/flight/search";
+		String url = getFlightUrl() + "/flight/search";
 		
 		String fromCity = request.getParameter("fromCity");
 		String toCity = request.getParameter("toCity");
@@ -91,12 +121,14 @@ public class ARSController
 		List<Flight> flightList = (List<Flight>) restTemplate.getForObject(url + "/" + fromCity + "/" + toCity + "/" + depDate, List.class);
 	    
 		System.out.println(flightList);
+		
 		model.addAttribute("flightList", flightList);
+    
 		model.addAttribute("fromCity", fromCity);
 		model.addAttribute("toCity", toCity);
 		model.addAttribute("depDate", depDate);
+    
 		return "/searchFlight.jsp";
-		
 	}
 	
 	@GetMapping(path="/autocomplete/{query}")
@@ -115,34 +147,33 @@ public class ARSController
 	}
 	
 	@RequestMapping("/addAirport")
-	public String addAirport(HttpServletRequest request) {
+	public String addAirport(HttpServletRequest request, Model model) {
+		Airport airport = new Airport();
+		
+		model.addAttribute("airport", airport);
+		
 	    return "/addairport.jsp";
 	}
 	
-	@PostMapping(path="/addAirportAction")
-	public String addAirportAction(@RequestBody Airport airport)
-	{
-		// TODO: Error Here
-		// Send and receive airport object
+	@PostMapping("/addAirportAction")
+    public String insertAirportAction(@ModelAttribute("airport") Airport airport)
+    {
+		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 		
-		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(acceptableMediaTypes);
+		
+		HttpEntity<Airport> entity = new HttpEntity<>(airport, headers);
 		
 		String url = getAirportUrl() + "/airport/add";
 		
-		/*String abbreviation = request.getParameter("abbreviation");
-		String airportName = request.getParameter("airportName");
-		String location = request.getParameter("location");
-		Airport airport = new Airport();
-		airport.setAbbreviation(abbreviation);
-		airport.setAirportName(airportName);
-		airport.setLocation(location);*/
+		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
 		
-		Airport newAirport = restTemplate.postForObject(url, airport, Airport.class);
+		System.out.println(newAirport.getBody());
 		
-		System.out.println(newAirport);
-		
-		return "success.jsp";
-	}
+		return "/success.jsp";
+    }
 	
 	@RequestMapping("/newBooking/{flightNo}")
 	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
@@ -186,7 +217,6 @@ public class ARSController
 		return "/payment.jsp";
 	}
 	
-	
 	/*
 	 * Utility Methods to get Microservice URLs
 	 */
@@ -199,7 +229,7 @@ public class ARSController
 	    String hostname = instanceInfo.getHostName();
 	    int port = instanceInfo.getPort();
 	    
-	    return hostname + ":" + port;
+	    return "http://" + hostname + ":" + port;
 	}
 	
 	public String getBookingUrl()
@@ -211,7 +241,7 @@ public class ARSController
 	    String hostname = instanceInfo.getHostName();
 	    int port = instanceInfo.getPort();
 	    
-	    return hostname + ":" + port;
+	    return "http://" + hostname + ":" + port;
 	}
 	
 	public String getFlightUrl()
@@ -223,7 +253,7 @@ public class ARSController
 	    String hostname = instanceInfo.getHostName();
 	    int port = instanceInfo.getPort();
 	    
-	    return hostname + ":" + port;
+	    return "http://" + hostname + ":" + port;
 	}
 	
 	public String getUserUrl()
@@ -235,6 +265,6 @@ public class ARSController
 	    String hostname = instanceInfo.getHostName();
 	    int port = instanceInfo.getPort();
 	    
-	    return hostname + ":" + port;
+	    return "http://" + hostname + ":" + port;
 	}
 }
