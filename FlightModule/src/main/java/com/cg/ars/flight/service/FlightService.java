@@ -13,5 +13,8 @@ public interface FlightService extends MongoRepository<Flight, String>
 	public Flight findByflightNo(String flightNo);
 	
 	public List<Flight> findByDepCityAndArrCityAndDepDate(String depCity, String arrCity, LocalDate depDate);
+
+	public List<String> findByDepCityLike(String depCity);
+
 	
 }

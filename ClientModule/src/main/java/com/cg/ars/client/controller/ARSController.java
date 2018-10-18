@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,9 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
@@ -117,9 +123,27 @@ public class ARSController
 		System.out.println(flightList);
 		
 		model.addAttribute("flightList", flightList);
+    
+		model.addAttribute("fromCity", fromCity);
+		model.addAttribute("toCity", toCity);
+		model.addAttribute("depDate", depDate);
+    
+		return "/searchFlight.jsp";
+	}
+	
+	@GetMapping(path="/autocomplete/{query}")
+	public @ResponseBody List<String> autocomplete(@PathVariable("query") String query, Model model ) {
 		
-		return "/success.jsp";
+		RestTemplate restTemplate = new RestTemplate();
 		
+		System.out.println(query);
+		String url= getFlightUrl() + "/flight/getCityList";
+		@SuppressWarnings("unchecked")
+		List<String> response = restTemplate.getForObject(url + "/" + query, List.class);
+		
+		System.out.println(response);
+		model.addAttribute("response",response);
+		return response;
 	}
 	
 	@RequestMapping("/addAirport")
@@ -131,7 +155,7 @@ public class ARSController
 	    return "/addairport.jsp";
 	}
 	
-	@PostMapping(value="/addAirportAction")
+	@PostMapping("/addAirportAction")
     public String insertAirportAction(@ModelAttribute("airport") Airport airport)
     {
 		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
@@ -151,38 +175,47 @@ public class ARSController
 		return "/success.jsp";
     }
 	
-	
-	
-	/*@PostMapping(path="/addAirportAction")
-	public String addAirportAction(@ModelAttribute("airport") Airport airport, Model model)
-	{
-		String url = getAirportUrl() + "/airport/add";
+	@RequestMapping("/newBooking/{flightNo}")
+	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
 		
-		System.out.println(airport);
+		RestTemplate restTemplate = new RestTemplate();
+		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
+		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flightNo;
 		
-		HttpHeaders headers=new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		Flight flight = restTemplate.getForObject(url1,Flight.class);
+		String bookingId = restTemplate.getForObject(url2, String.class);
 		
-		String abbreviation = request.getParameter("abbreviation");
-		String airportName = request.getParameter("airportName");
-		String location = request.getParameter("location");
+		String classType = request.getParameter("class");
 		
-		Airport airport1 = new Airport();
-		airport1.setAbbreviation(airport.getAbbreviation());
-		airport1.setAirportName(airport.getAirportName());
-		airport1.setLocation(airport.getLocation());
-		
-		System.out.println("Hello"+airport1);
-		
-		HttpEntity<Airport> airportEntity = new HttpEntity<Airport>(airport,headers);
-
-		Airport newAirport = restTemplate.postForObject(url, airport, Airport.class);
-		
-		System.out.println(newAirport);
-		
-		return "/success.jsp";
+		model.addAttribute("bookingId", bookingId);
+		model.addAttribute("classType", classType);
+		model.addAttribute("flight", flight);
+		return "/newBooking.jsp";
 	}
-	*/
+	
+	@PostMapping("/payment")
+	public String payment(HttpServletRequest request, Model model)
+	{
+		RestTemplate restTemplate = new RestTemplate();
+		
+		String name = request.getParameter("name");
+		String noOfPassengers = request.getParameter("noOfPassengers");
+		String bookingId = request.getParameter("bookingId");
+		String flightNo = request.getParameter("flightNo");
+		String classType = request.getParameter("classType");
+		String depCity = request.getParameter("depCity");
+		String arrCity = request.getParameter("arrCity");
+		
+		model.addAttribute("name", name);
+		model.addAttribute("noOfPassengers", noOfPassengers);
+		model.addAttribute("bookingId", bookingId);
+		model.addAttribute("flightNo", flightNo);
+		model.addAttribute("classType", classType);
+		model.addAttribute("depCity", depCity);
+		model.addAttribute("arrCity", arrCity);
+		
+		return "/payment.jsp";
+	}
 	
 	/*
 	 * Utility Methods to get Microservice URLs

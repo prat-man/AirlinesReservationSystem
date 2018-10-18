@@ -50,4 +50,14 @@ public class FlightController
     {
         return service.findByDepCityAndArrCityAndDepDate(depCity, arrCity, LocalDate.parse(depDate));
     }
+    
+    @RequestMapping(path="/getCityList/{query}")
+    public List<String> autocomplete(@PathVariable("query") String depCity){
+		return service.findByDepCityLike(depCity);	
+    }
+    
+    @RequestMapping(path="/searchbyFlightNo/{flightNo}")
+    public Flight searchByFlightNo(@PathVariable String flightNo) {
+    	return service.findByflightNo(flightNo);
+    }
 }
