@@ -28,8 +28,6 @@ public class Booking
 	
 	private Double totalFare;
 	
-	private String seatNumber;
-	
 	@NotNull(message= "Credit Card Information cannot be null.")
 	@Pattern(regexp="[0-9]{16}",message="Invalid Credit Card Information. Must be exactly 16 digits")
 	private String creditCardInfo;

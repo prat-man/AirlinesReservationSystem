@@ -3,13 +3,17 @@ package com.cg.ars.client.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
@@ -88,8 +92,26 @@ public class ARSController
 	    
 		System.out.println(flightList);
 		model.addAttribute("flightList", flightList);
-		return "/success.jsp";
+		model.addAttribute("fromCity", fromCity);
+		model.addAttribute("toCity", toCity);
+		model.addAttribute("depDate", depDate);
+		return "/searchFlight.jsp";
 		
+	}
+	
+	@GetMapping(path="/autocomplete/{query}")
+	public @ResponseBody List<String> autocomplete(@PathVariable("query") String query, Model model ) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		System.out.println(query);
+		String url= getFlightUrl() + "/flight/getCityList";
+		@SuppressWarnings("unchecked")
+		List<String> response = restTemplate.getForObject(url + "/" + query, List.class);
+		
+		System.out.println(response);
+		model.addAttribute("response",response);
+		return response;
 	}
 	
 	@RequestMapping("/addAirport")
@@ -120,6 +142,48 @@ public class ARSController
 		System.out.println(newAirport);
 		
 		return "success.jsp";
+	}
+	
+	@RequestMapping("/newBooking/{flightNo}")
+	public String newBooking(@PathVariable("flightNo") String flightNo, HttpServletRequest request, Model model) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
+		String url2 = getBookingUrl()+ "/booking/generateBookingId/" + flightNo;
+		
+		Flight flight = restTemplate.getForObject(url1,Flight.class);
+		String bookingId = restTemplate.getForObject(url2, String.class);
+		
+		String classType = request.getParameter("class");
+		
+		model.addAttribute("bookingId", bookingId);
+		model.addAttribute("classType", classType);
+		model.addAttribute("flight", flight);
+		return "/newBooking.jsp";
+	}
+	
+	@PostMapping("/payment")
+	public String payment(HttpServletRequest request, Model model)
+	{
+		RestTemplate restTemplate = new RestTemplate();
+		
+		String name = request.getParameter("name");
+		String noOfPassengers = request.getParameter("noOfPassengers");
+		String bookingId = request.getParameter("bookingId");
+		String flightNo = request.getParameter("flightNo");
+		String classType = request.getParameter("classType");
+		String depCity = request.getParameter("depCity");
+		String arrCity = request.getParameter("arrCity");
+		
+		model.addAttribute("name", name);
+		model.addAttribute("noOfPassengers", noOfPassengers);
+		model.addAttribute("bookingId", bookingId);
+		model.addAttribute("flightNo", flightNo);
+		model.addAttribute("classType", classType);
+		model.addAttribute("depCity", depCity);
+		model.addAttribute("arrCity", arrCity);
+		
+		return "/payment.jsp";
 	}
 	
 	

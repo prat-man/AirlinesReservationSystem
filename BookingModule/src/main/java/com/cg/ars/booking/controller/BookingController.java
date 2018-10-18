@@ -45,4 +45,11 @@ public class BookingController
 	{
 		return B_SER.save(booking);
 	}
+	
+	@GetMapping(path="/generateBookingId/{flightNo}")
+	public String generateBookingId(@PathVariable("flightNo") String flightNo)
+	{
+		return B_SER.generateBookingId(flightNo);
+		
+	}
 }
