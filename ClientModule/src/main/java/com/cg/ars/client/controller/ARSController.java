@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.ars.client.dto.Airport;
@@ -58,7 +57,7 @@ public class ARSController
 	}
 	
 	@PostMapping(value="/addFlightAction")
-	public String addFlightAction(@ModelAttribute("flight") Flight flight) {
+	public String addFlightAction(@ModelAttribute("flight") Flight flight, Model model) {
 		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
 		
@@ -69,49 +68,12 @@ public class ARSController
 		
 		String url = getFlightUrl() + "/flight/add";
 		
-		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
+		ResponseEntity<Flight> newFlight = restTemplate.postForEntity(url, entity, Flight.class);
 		
-		System.out.println(newAirport.getBody());
+		model.addAttribute("newFlight", newFlight.getBody());
 		
 		return "/success.jsp";
 	}
-	
-	/*@RequestMapping("/loginAction")
-	public String loginAction(HttpServletRequest request)
-	{
-		String url = "http://localhost:8081/user/verify";
-		
-		Object object = restTemplate.postForObject(url, request, Object.class);
-		
-		if (object instanceof User) {
-			// TODO: Show appropriate console based on role
-			User user = (User) object;
-			return "/success.jsp";
-		}
-		else {
-			return "/failure.jsp";
-		}
-	}
-	
-	@RequestMapping("/register")
-	public String register(HttpServletRequest request) {
-	    return "/register.jsp";
-	}
-	
-	@RequestMapping("/registerAction")
-	public String registerAction(HttpServletRequest request)
-	{
-		String url = "http://localhost:8081/user/add";
-		
-		Object object = restTemplate.postForObject(url, request, Object.class);
-		
-		if (object instanceof Boolean) {
-			return "success";
-		}
-		else {
-			return "failure";
-		}
-	}*/
 	
 	@GetMapping("/searchFlight")
 	public String searchFlight(HttpServletRequest request, Model model)
@@ -134,21 +96,6 @@ public class ARSController
 		return "/searchFlight.jsp";
 	}
 	
-	@GetMapping(path="/autocomplete/{query}")
-	public @ResponseBody List<String> autocomplete(@PathVariable("query") String query, Model model ) {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		System.out.println(query);
-		String url= getFlightUrl() + "/flight/getCityList";
-		@SuppressWarnings("unchecked")
-		List<String> response = restTemplate.getForObject(url + "/" + query, List.class);
-		
-		System.out.println(response);
-		model.addAttribute("response",response);
-		return response;
-	}
-	
 	@RequestMapping("/addAirport")
 	public String addAirport(HttpServletRequest request, Model model) {
 		Airport airport = new Airport();
@@ -159,7 +106,7 @@ public class ARSController
 	}
 	
 	@PostMapping("/addAirportAction")
-    public String insertAirportAction(@ModelAttribute("airport") Airport airport)
+    public String insertAirportAction(@ModelAttribute("airport") Airport airport, Model model)
     {
 		List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
 		acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
@@ -173,7 +120,7 @@ public class ARSController
 		
 		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
 		
-		System.out.println(newAirport.getBody());
+		model.addAttribute("newAirport", newAirport.getBody());
 		
 		return "/success.jsp";
     }
@@ -189,15 +136,15 @@ public class ARSController
 		
 		String bookingId = restTemplate.getForObject(url2, String.class);
 		
-		System.out.println(bookingId);
 		String classFare = request.getParameter("class");
-		String arr[]=classFare.split("@");
-		Double fare = Double.parseDouble(arr[1]);
-		System.out.println(fare);
+		
+		String arr[] = classFare.split("@");
+		
 		model.addAttribute("bookingId", bookingId);
-		model.addAttribute("fare", fare);
 		model.addAttribute("classType", arr[0]);
+		model.addAttribute("fare", Double.parseDouble(arr[1]));
 		model.addAttribute("flight", flight);
+		
 		return "/newbooking.jsp";
 	}
 	
@@ -215,6 +162,7 @@ public class ARSController
 		Flight flight = restTemplate.getForObject(url, Flight.class);
 		
 		Double totalFare = noOfPassengers * fare;
+		
 		model.addAttribute("name", name);
 		model.addAttribute("classType",classType);
 		model.addAttribute("noOfPassengers", noOfPassengers);
@@ -252,7 +200,22 @@ public class ARSController
 		
 		ResponseEntity<Booking> confirmedBooking = restTemplate.postForEntity(url, entity, Booking.class);
 		
-		model.addAttribute("confirmedBooking", confirmedBooking.getBody());
+		Booking confBooking = confirmedBooking.getBody();
+		
+		model.addAttribute("confirmedBooking", confBooking);
+		
+		
+		url = getFlightUrl() + "/flight/updateSeats/" + confBooking.getFlightNo() + "/" + confBooking.getClassType() + "/" + confBooking.getNoOfPassengers();
+
+		restTemplate.put(url, null);
+		
+		
+		url = getFlightUrl() + "/flight/searchByFlightNo/" + confBooking.getFlightNo();
+
+		Flight flight = restTemplate.getForObject(url, Flight.class);
+		
+		model.addAttribute("depDate", flight.getDepDate());
+		
 		
 		return "/bookingSuccess.jsp";
 	}

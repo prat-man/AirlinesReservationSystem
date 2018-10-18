@@ -60,8 +60,8 @@ public class Booking
 		return name;
 	}
 
-	public void setName(String username) {
-		this.name = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getNoOfPassengers() {
