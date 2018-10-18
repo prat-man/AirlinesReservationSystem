@@ -37,7 +37,7 @@
   					<input type="radio" name="class" value="Business@${result.firstSeatsFare}"> BusinessClass: ${result.bussSeatsFare}
   				</form>
   				</td>
-  				<td><button type="submit" class="btn btn-danger" form="bookform" >Book</button></td>
+  				<td><button type="submit" class="btn btn-danger" form="bookform">Book</button></td>
     		</tr>
     	</table>
     </div>

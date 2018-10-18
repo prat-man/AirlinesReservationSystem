@@ -43,7 +43,7 @@ public class ARSController
 	    return "/index.jsp";
 	}
 	
-	@RequestMapping(value="adminPanel")
+	@RequestMapping(value="/adminPanel")
 	public String adminPanel(HttpServletRequest request) {
 	    return "/adminPanel.jsp";
 	}
