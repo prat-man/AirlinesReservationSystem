@@ -23,7 +23,7 @@
      </div>
 </div>
 <input type="hidden" name="bookingId" value="${bookingId}">
-<input type="hidden" name="flightNo" value="${flightNo}">
+<input type="hidden" name="flightNo" value="${flight.flightNo}">
 <input type="hidden" name="name" value="${name}">
 <input type="hidden" name="noOfPassengers" value="${noOfPassengers}">
 <input type="hidden" name="classType" value="${classType}">

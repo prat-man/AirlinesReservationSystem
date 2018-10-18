@@ -18,7 +18,7 @@ public class Booking
 	
 	@NotNull(message= "Username cannot be null.")
 	@Pattern(regexp="[A-Za-z][A-Za-z0-9\\.\\-\\_]{7,39}",message="Invalid Username. Must be atleast 8 characters long. Must start with an alphabet. Can contain UPPERCASE, lowercase, digits, ., -, and _")
-	private String username;
+	private String name;
 	
 	@NotNull(message= "Number of Passengers cannot be null.")
 	private Integer noOfPassengers;
@@ -61,11 +61,11 @@ public class Booking
 	}
 
 	public String getUsername() {
-		return username;
+		return name;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.name = username;
 	}
 
 	public Integer getNoOfPassengers() {
@@ -118,7 +118,7 @@ public class Booking
 
 	@Override
 	public String toString() {
-		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + username
+		return "Booking [bookingId=" + bookingId + ", flightNo=" + flightNo + ", username=" + name
 				+ ", noOfPassengers=" + noOfPassengers + ", classType=" + classType + ", totalFare=" + totalFare
 				+ ", creditCardInfo=" + creditCardInfo + ", srcCity=" + srcCity + ", destCity=" + destCity + "]";
 	}
