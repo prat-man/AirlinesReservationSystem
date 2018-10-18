@@ -199,7 +199,6 @@ public class ARSController
 	@PostMapping("/payment")
 	public String payment(HttpServletRequest request, Model model)
 	{
-	
 		String name = request.getParameter("name");
 		Integer noOfPassengers = Integer.parseInt(request.getParameter("noOfPassengers"));
 		String bookingId = request.getParameter("bookingId");
@@ -209,16 +208,16 @@ public class ARSController
 		String depCity = request.getParameter("depCity");
 		String arrCity = request.getParameter("arrCity");
 		
-		String url1 = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
-		System.out.println(url1);
-		Flight flight = restTemplate.getForObject(url1,Flight.class);
-		Double totalFare = noOfPassengers*fare;
+		String url = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
+		Flight flight = restTemplate.getForObject(url, Flight.class);
+		
+		Double totalFare = noOfPassengers * fare;
 		model.addAttribute("name", name);
 		model.addAttribute("classType",classType);
 		model.addAttribute("noOfPassengers", noOfPassengers);
 		model.addAttribute("bookingId", bookingId);
 		model.addAttribute("totalfare", totalFare);
-		model.addAttribute("flight",flight);
+		model.addAttribute("flight", flight);
 		
 		return "/payment.jsp";
 	}

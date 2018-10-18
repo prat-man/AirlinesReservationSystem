@@ -3,11 +3,6 @@ package com.cg.ars.booking.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.repository.Query;
 
 import com.cg.ars.booking.dto.Sequence;
 
@@ -17,7 +12,7 @@ public class BookingUtilsImpl implements BookingUtils
 	SequenceService seqSer;
 	
 	@Override
-	public String generateBookingId(String flightNo)
+	public String generateBookingId(String airline)
 	{
 		Optional<Sequence> opSeq = seqSer.findById(0);
 		
@@ -27,7 +22,8 @@ public class BookingUtilsImpl implements BookingUtils
 			Sequence seq = opSeq.get();
 			seqId = seq.getSequenceId();
 			seq.setSequenceId(seqId + 1);
-			seqSer.save(seq);
+			seqSer.deleteById(0);
+			seqSer.insert(seq);
 		}
 		else {
 			seqId = 1000;
@@ -35,6 +31,6 @@ public class BookingUtilsImpl implements BookingUtils
 			seqSer.insert(seq);
 		}
 		
-		return flightNo.substring(0, 3) + seqId;
+		return airline.substring(0, 3).toUpperCase() + seqId;
 	}
 }
