@@ -1,10 +1,17 @@
 server:
-    port: 1234
+    port: 0
+    
 spring:
   data:
     mongodb:
       uri: mongodb://127.0.0.1:27017
       host: localhost
       port: 27017
-      database: db_157971
-      
+      database: arsdb
+  application:
+    name: airport-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

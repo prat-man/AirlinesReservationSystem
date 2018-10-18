@@ -22,24 +22,27 @@ public class BookingController
 	@Autowired
 	BookingService B_SER;
 	
-	@PostMapping(value="/add",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-	public Booking insertBooking(@Valid @RequestBody Booking booking){
+	@PostMapping(value="/add")
+	public Booking insertBooking(@Valid @RequestBody Booking booking)
+	{
 		return B_SER.insert(booking);
 	}
 	
-	@GetMapping(value="/search/{id}",produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/search/{id}")
     public Booking searchBookingById(@PathVariable("id") String bookingId) throws BookingException
     {
 		Booking booking = B_SER.findByBookingId(bookingId);
-		if(booking == null)
-		{
-			throw new BookingException("Booking Id:["+bookingId+"] not found","/booking/searchBooking");
+		
+		if (booking == null) {
+			throw new BookingException("Booking with [bookingId=" + bookingId + "] not found", "/booking/search/" + bookingId);
 		}
+		
     	return booking;
     }
 	
-	@PutMapping(value="/update",consumes=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
-	public Booking updateBooking(@Valid @RequestBody Booking booking){
+	@PutMapping(value="/update")
+	public Booking updateBooking(@Valid @RequestBody Booking booking)
+	{
 		return B_SER.save(booking);
 	}
 }
