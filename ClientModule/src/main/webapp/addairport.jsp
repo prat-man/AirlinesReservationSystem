@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<script src="/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 <link rel="shortcut icon" type="image/png" href="/resources/fav.png"/>
 <title>Add Airport</title>
 </head>
@@ -20,6 +23,6 @@
 	<tr><td colspan="2" align="right">	<input type="submit" value="Add Airport" />                </td></tr>
 	</f:form>
 	</table>
-	
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

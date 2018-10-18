@@ -210,8 +210,6 @@ public class ARSController
 		String flightNo = request.getParameter("flightNo");
 		Double fare = Double.parseDouble(request.getParameter("fare"));
 		String classType = request.getParameter("classType");
-		String depCity = request.getParameter("depCity");
-		String arrCity = request.getParameter("arrCity");
 		
 		String url = getFlightUrl() + "/flight/searchByFlightNo/" + flightNo;
 		Flight flight = restTemplate.getForObject(url, Flight.class);
