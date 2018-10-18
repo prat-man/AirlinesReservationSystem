@@ -32,7 +32,7 @@
 					<tr><td align="right">First Seats Fare:</td><td><f:input type="text" path="firstSeatsFare" placeholder="First Seat Fare"/></td></tr>
 					<tr><td align="right">Business Seats:</td><td>  <f:input type="number" path="bussSeats" placeholder="Business Seat"/></td></tr>
 					<tr><td align="right">Business Seat Fare:</td><td> <f:input type="text" path="bussSeatsFare" placeholder="Business Seat Fare"/></td></tr>
-					<tr><td colspan="2" align="right"><input type="submit" value="Add"></td></tr>
+					<tr><td colspan="2" align="right"><input type="submit" value="Add Flight"></td></tr>
 					
 				</table>
 				</f:form>
@@ -40,5 +40,6 @@
 			<div class="body"></div>
 		</div>
 	</div>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
