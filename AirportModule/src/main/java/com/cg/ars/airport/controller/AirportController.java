@@ -42,7 +42,7 @@ public class AirportController
 		return newAirport;
 	}
 	
-	@DeleteMapping(path="/delete/{abreviation}")
+	@DeleteMapping(path="/delete/{abbreviation}")
 	public String deleteAirport(@PathVariable("abbreviation") @Valid String abbreviation) throws AirportException
 	{
 		String deleteAirport = aser.deleteByAbbreviation(abbreviation);
