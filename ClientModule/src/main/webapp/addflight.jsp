@@ -20,18 +20,18 @@
 			<%@taglib prefix="f" uri="http://www.springframework.org/tags/form"  %>
 				<f:form action="addFlightAction" method="POST" modelAttribute="flight">
 				<table border="3" align="center">
-					<tr><td align="right">Flight No.:</td><td><f:input type="text" path="flightNo" placeholder="Flight No"/></td></tr>
-					<tr><td align="right">Airline Name: </td><td>	<f:input type="text" path="airline" placeholder="Airline"/></td></tr>
-					<tr><td align="right">From:		</td><td>	<f:input type="text" path="depCity" placeholder="From City"/></td></tr>
-					<tr><td align="right">To: 		</td><td>	<f:input type="text" path="arrCity" placeholder="To City"/></td></tr>
-					<tr><td align="right">Departure Date:</td><td> <f:input type="date" path="depDate" placeholder="Depature Date"/></td></tr>
-					<tr><td align="right">Arrival Date:</td><td> 	<f:input type="date" path="arrDate" placeholder="Arrival Date"/></td></tr>
-					<tr><td align="right">Departure Time:</td><td>	<f:input type="time" path="depTime" placeholder="Departure Time"/></td></tr>
-					<tr><td align="right">Arrival Time:</td><td>	<f:input type="time" path="arrTime" placeholder="Arrival Time"/></td></tr>
-					<tr><td align="right">First Seats:</td><td>	<f:input type="number" path="firstSeats" placeholder="First Seats"/></td></tr>
-					<tr><td align="right">First Seats Fare:</td><td><f:input type="text" path="firstSeatsFare" placeholder="First Seat Fare"/></td></tr>
-					<tr><td align="right">Business Seats:</td><td>  <f:input type="number" path="bussSeats" placeholder="Business Seat"/></td></tr>
-					<tr><td align="right">Business Seat Fare:</td><td> <f:input type="text" path="bussSeatsFare" placeholder="Business Seat Fare"/></td></tr>
+					<tr><td align="right">Flight No.:</td><td><f:input type="text" path="flightNo" placeholder="Flight No" required="required"/></td></tr>
+					<tr><td align="right">Airline Name: </td><td>	<f:input type="text" path="airline" placeholder="Airline" required="required"/></td></tr>
+					<tr><td align="right">From:		</td><td>	<f:input type="text" path="depCity" placeholder="From City" required="required"/></td></tr>
+					<tr><td align="right">To: 		</td><td>	<f:input type="text" path="arrCity" placeholder="To City" required="required"/></td></tr>
+					<tr><td align="right">Departure Date:</td><td> <f:input type="date" path="depDate" placeholder="Depature Date" required="required"/></td></tr>
+					<tr><td align="right">Arrival Date:</td><td> 	<f:input type="date" path="arrDate" placeholder="Arrival Date" required="required"/></td></tr>
+					<tr><td align="right">Departure Time:</td><td>	<f:input type="time" path="depTime" placeholder="Departure Time" required="required"/></td></tr>
+					<tr><td align="right">Arrival Time:</td><td>	<f:input type="time" path="arrTime" placeholder="Arrival Time" required="required"/></td></tr>
+					<tr><td align="right">First Seats:</td><td>	<f:input type="number" path="firstSeats" placeholder="First Seats" required="required"/></td></tr>
+					<tr><td align="right">First Seats Fare:</td><td><f:input type="text" path="firstSeatsFare" placeholder="First Seat Fare" required="required"/></td></tr>
+					<tr><td align="right">Business Seats:</td><td>  <f:input type="number" path="bussSeats" placeholder="Business Seat" required="required"/></td></tr>
+					<tr><td align="right">Business Seat Fare:</td><td> <f:input type="text" path="bussSeatsFare" placeholder="Business Seat Fare" required="required"/></td></tr>
 					<tr><td colspan="2" align="right"><input type="submit" value="Add Flight"></td></tr>
 					
 				</table>

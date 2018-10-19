@@ -120,6 +120,8 @@ public class ARSController
 		
 		ResponseEntity<Airport> newAirport = restTemplate.postForEntity(url, entity, Airport.class);
 		
+		System.out.println(newAirport);
+		
 		model.addAttribute("newAirport", newAirport.getBody());
 		
 		return "/success.jsp";

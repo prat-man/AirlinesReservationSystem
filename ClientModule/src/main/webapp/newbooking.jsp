@@ -21,7 +21,7 @@
       <tr>
       <th><label class="col-sm-2 control-label">Name:</label></th>
       <td><div class="col-sm-12">
-        <input class="form-control" id="focusedInput" type="text" name="name" ></td>
+        <input class="form-control" id="focusedInput" type="text" name="name" required></td>
       </tr>
       </div>
       </div>
@@ -29,7 +29,7 @@
    	  <tr>
       <th><label class="col-sm-10 control-label">Number of Passengers:</label></th>
       <td><div class="col-sm-12">
-        <input class="form-control" id="focusedInput" type="text" name="noOfPassengers" ></td>
+        <input class="form-control" id="focusedInput" type="text" name="noOfPassengers" required></td>
       </tr>
       </div>
       </div>

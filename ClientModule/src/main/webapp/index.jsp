@@ -17,10 +17,10 @@
 			<h3 align="center">Search a flight</h3>
 			<div class="flightSearchBox col-lg-6">
 				<form action="/ars/searchFlight" method="GET">
-					<input class="form-control" type="text"  name="fromCity" placeholder="From City" onkeyup="showResult(this.value)">
+					<input class="form-control" type="text"  name="fromCity" placeholder="From City" required>
 					<div id="getCityList"></div>
-					<input class="form-control" type="text"  name="toCity" placeholder="To City">
-					<input class="form-control" type="date"  name="depDate"><br/>
+					<input class="form-control" type="text"  name="toCity" placeholder="To City" required>
+					<input class="form-control" type="date"  name="depDate" required><br/>
 					<button type="submit" class="btn btn-primary">Search</button>
 				</form>
 			</div>
