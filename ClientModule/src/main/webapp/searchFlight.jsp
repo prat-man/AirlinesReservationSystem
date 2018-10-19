@@ -35,12 +35,12 @@
     			<td>${result.airline}</td>
     			<td>${result.depTime}</td>
     			<td>${result.arrTime}</td>
-    			<form action="/ars/newBooking/${result.flightNo}" Method="get" id="bookform">
+    			<form action="/ars/newBooking/${result.flightNo}" Method="get" id="bookform${result.flightNo}">
     			<td>
 	    			<input type="radio" name="class" value="First@${result.firstSeatsFare}" checked> FirstClass: ${result.firstSeatsFare}<br/>
 	  				<input type="radio" name="class" value="Business@${result.bussSeatsFare}"> BusinessClass: ${result.bussSeatsFare}
   				</td>
-  				<td><button type="submit" class="btn btn-danger" form="bookform">Book</button></td>
+  				<td><button type="submit" class="btn btn-danger" form="bookform${result.flightNo}">Book</button></td>
   				</form>
     		</tr>
     	</c:forEach>
