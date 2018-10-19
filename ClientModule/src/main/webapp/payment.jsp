@@ -33,7 +33,7 @@
 <div class="form-group">
 <tr align="center"><th><label class="control-label">Enter 16-digit Credit Card Number:</label></th>
      <div class="col-sm-10">
-<th><input class="form-control" id="focusedInput" type="text" name="creditCardInfo" ></th></tr>
+<th><input class="form-control" id="focusedInput" type="text" name="creditCardInfo" pattern=".{16}" required></th></tr>
      </div>
 </div>
 <input type="hidden" name="bookingId" value="${bookingId}">
